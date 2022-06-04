@@ -11,9 +11,9 @@
   },
   "scripts": {
     "killall node": "killall node",
-    "dev": "nodemon --exec babel-node server.js",
+    "dev": "nodemon --exec babel-node src/server.js",
     "fe-build": "cd client && npm install && npm run build",
-    "start": "npm run fe-build && babel-node -- server.js"
+    "start": "npm run fe-build && babel src --out-dir build && node build/server.js"
   },
   "dependencies": {
     "axios": "^0.27.2",

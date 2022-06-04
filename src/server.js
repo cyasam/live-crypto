@@ -1,9 +1,9 @@
-import './src/env';
+import './env';
 
 import http from 'http';
 import express from 'express';
-import apiRoute from './src/api';
-import createSocket from './src/socket';
+import apiRoute from './api';
+import createSocket from './socket';
 import path from 'node:path';
 
 const PORT = process.env.PORT || '3001';

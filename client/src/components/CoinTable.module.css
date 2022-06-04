@@ -1,0 +1,67 @@
+.table {
+  width: 100%;
+  font-size: 15px;
+  font-weight: 500;
+  border-top: 1px solid #eff2f5;
+  color: rgb(23, 25, 36);
+  border-collapse: collapse;
+}
+
+.thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 47px;
+  background-color: #fff;
+  font-weight: 500;
+  font-size: 13px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.tbodytr {
+  height: 80px;
+}
+
+.tbodytr:hover {
+  background: rgb(248, 250, 253);
+}
+
+.th,
+.td {
+  padding: 10px;
+  text-align: right;
+}
+
+.td {
+  border-bottom: 1px solid #eff2f5;
+}
+
+.rank,
+.name {
+  text-align: left;
+}
+
+td.rank {
+  width: 30px;
+  color: rgb(23, 25, 36);
+  font-weight: normal;
+}
+
+.symbol {
+  color: #999;
+  font-weight: normal;
+  margin-left: 6px;
+}
+
+.nameblock {
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  display: block;
+  margin-top: 1px;
+  margin-right: 6px;
+  border-radius: 100%;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}

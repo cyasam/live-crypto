@@ -1,0 +1,26 @@
+{
+  "name": "live-crypto",
+  "version": "1.0.0",
+  "description": "Live Crypto App Project",
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.2",
+    "@babel/node": "^7.17.10",
+    "@babel/preset-env": "^7.18.2",
+    "nodemon": "^2.0.16"
+  },
+  "scripts": {
+    "killall node": "killall node",
+    "dev": "nodemon --exec babel-node server.js",
+    "fe-build": "cd client && npm install && npm run build",
+    "start": "npm run fe-build && babel-node -- server.js"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "classnames": "^2.3.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "socket.io": "^4.5.1",
+    "websocket": "^1.0.34"
+  }
+}

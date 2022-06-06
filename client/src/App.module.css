@@ -4,8 +4,10 @@
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(
-    rgb(248, 250, 253) 0%,
-    rgba(248, 250, 253, 0) 413px
-  );
+  padding: 30px;
+  background-color: rgb(248, 250, 253);
+}
+
+.container {
+  width: 100%;
 }

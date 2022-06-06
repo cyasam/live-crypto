@@ -3,6 +3,8 @@ import classNames from 'classnames';
 import styles from './CoinTable.module.css';
 import PercentageArea from './PercentageArea';
 import Price from './Price';
+import Logo from '../logo.svg';
+import SupplyPrice from './SupplyPrice';
 
 function CoinTable({ assets }) {
   return (
@@ -12,6 +14,9 @@ function CoinTable({ assets }) {
           <th className={classNames(styles.th, styles.rank)}>#</th>
           <th className={classNames(styles.th, styles.name)}>Name</th>
           <th className={styles.th}>Price</th>
+          <th className={styles.th}>Market Cap</th>
+          <th className={styles.th}>Volume (24h)</th>
+          <th className={styles.th}>Circulating Supply</th>
           <th className={styles.th}>24h %</th>
         </tr>
       </thead>
@@ -20,6 +25,11 @@ function CoinTable({ assets }) {
           const price = Number(asset.priceUsd).toFixed(2);
 
           const changePercent24Hr = Number(asset.changePercent24Hr);
+
+          const priceTdClassName = classNames(styles.td, {
+            [styles.up]: asset.changed === 'up',
+            [styles.down]: asset.changed === 'down',
+          });
 
           return (
             <tr className={styles.tbodytr} key={asset.id}>
@@ -34,13 +44,27 @@ function CoinTable({ assets }) {
                     height={30}
                     alt={asset.name}
                     className={styles.image}
+                    onError={(e) => (e.target.src = Logo)}
                   />
                   <span>{asset.name}</span>
                   <span className={styles.symbol}>{asset.symbol}</span>
                 </div>
               </td>
-              <td className={styles.td}>
+              <td key={price} className={priceTdClassName}>
                 <Price value={price} />
+              </td>
+              <td className={styles.td}>
+                <Price value={asset.marketCapUsd} />
+              </td>
+              <td className={styles.td}>
+                <Price value={asset.volumeUsd24Hr} />
+              </td>
+              <td className={styles.td}>
+                <SupplyPrice
+                  value={asset.supply}
+                  symbol={asset.symbol}
+                  max={asset.maxSupply}
+                />
               </td>
               <td className={styles.td}>
                 <PercentageArea value={changePercent24Hr} />

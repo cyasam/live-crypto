@@ -1,7 +1,34 @@
+@keyframes upAnimation {
+  0%,
+  80% {
+    color: #16c784;
+  }
+  100% {
+    color: inherit;
+  }
+}
+
+@keyframes downAnimation {
+  0%,
+  80% {
+    color: #ea3943;
+  }
+  100% {
+    color: inherit;
+  }
+}
+
+.td.up {
+  animation: 0.8s ease-out upAnimation;
+}
+
+.td.down {
+  animation: 0.8s ease-out downAnimation;
+}
+
 .table {
   width: 100%;
   font-size: 15px;
-  font-weight: 500;
   border-top: 1px solid #eff2f5;
   color: rgb(23, 25, 36);
   border-collapse: collapse;
@@ -12,7 +39,7 @@
   top: 0;
   z-index: 10;
   height: 47px;
-  background-color: #fff;
+  background-color: rgb(248, 250, 253);
   font-weight: 500;
   font-size: 13px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -23,7 +50,7 @@
 }
 
 .tbodytr:hover {
-  background: rgb(248, 250, 253);
+  background: rgb(233 233 233);
 }
 
 .th,

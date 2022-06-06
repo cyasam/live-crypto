@@ -1,11 +1,11 @@
 import React from 'react';
 
-const formatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
+function Price({ value, currency }) {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency ?? 'USD',
+  });
 
-function Price({ value }) {
   return <>{formatter.format(value)}</>;
 }
 

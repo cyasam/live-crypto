@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import axios from 'axios';
 
 import CoinTable from './components/CoinTable';
+import LoadMoreButton from './components/LoadMoreButton';
 
 const socket = io('/', {
   path: '/socket',
@@ -15,20 +16,29 @@ const fetcher = (url) => axios.get(url).then((res) => res.data);
 
 const processAllData = (assets, changes) => {
   return assets.map((asset) => {
+    asset.priceUsd = Number(asset.priceUsd);
+    asset.changePercent24Hr = Number(asset.changePercent24Hr);
+
     if (!asset.price24hUsd || !changes) {
-      const difference =
-        (Number(asset.changePercent24Hr) * Number(asset.priceUsd)) / 100;
-      asset.price24hUsd = Number(asset.priceUsd) - difference;
+      const difference = (asset.changePercent24Hr * asset.priceUsd) / 100;
+      asset.price24hUsd = asset.priceUsd - difference;
     }
 
     if (changes) {
-      const newPrice = changes[asset.id];
+      let newPrice = changes[asset.id];
 
       if (newPrice) {
+        newPrice = Number(newPrice);
+
+        if (newPrice > asset.priceUsd) {
+          asset.changed = 'up';
+        } else if (newPrice < asset.priceUsd) {
+          asset.changed = 'down';
+        }
+
         asset.priceUsd = newPrice;
         asset.changePercent24Hr =
-          ((Number(asset.priceUsd) - asset.price24hUsd) / asset.price24hUsd) *
-          100;
+          ((asset.priceUsd - asset.price24hUsd) / asset.price24hUsd) * 100;
       }
     }
 
@@ -38,14 +48,39 @@ const processAllData = (assets, changes) => {
 
 function App() {
   const [assetsResult, setAssetsResult] = useState(null);
-  const { error } = useSWR('/api/assets', fetcher, {
-    refreshInterval: 60 * 1000,
-    revalidateOnFocus: false,
-    onSuccess(assets) {
-      const newAssets = processAllData(assets.data);
-      setAssetsResult(newAssets);
-    },
-  });
+  const [loadMore, setLoadMore] = useState(false);
+  const [limit, setLimit] = useState(50);
+  const [offset, setOffset] = useState(0);
+
+  const urlSearchParams = { limit: offset + limit };
+
+  if (loadMore) {
+    urlSearchParams.offset = offset;
+    urlSearchParams.limit = limit;
+  }
+
+  const params = new URLSearchParams(urlSearchParams);
+  const queryString = params.toString();
+
+  const { error } = useSWR(
+    `/api/assets${queryString && `?${queryString}`}`,
+    fetcher,
+    {
+      refreshInterval: 60 * 1000,
+      revalidateOnFocus: false,
+      onSuccess(assets) {
+        const newAssets = processAllData(assets.data);
+
+        let data = newAssets;
+        if (loadMore) {
+          data = [...assetsResult, ...newAssets];
+        }
+
+        setAssetsResult(data);
+        setLoadMore(false);
+      },
+    }
+  );
 
   useEffect(() => {
     socket.on('prices', (changes) => {
@@ -59,8 +94,21 @@ function App() {
   return (
     <div className={styles.app}>
       {error && <div>failed to load</div>}
-      {!assetsResult && <div>loading...</div>}
-      {assetsResult && <CoinTable assets={assetsResult} />}
+      {!assetsResult && !error && <div>loading...</div>}
+      {assetsResult && (
+        <div className={styles.container}>
+          <CoinTable assets={assetsResult} />
+          <LoadMoreButton
+            loading={loadMore}
+            onClick={(e) => {
+              e.preventDefault();
+
+              setLoadMore(true);
+              setOffset(offset + limit);
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }

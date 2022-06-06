@@ -68,10 +68,15 @@ function CoinPage({ page, onSuccess, onLoading, limit }) {
   );
 
   useEffect(() => {
+    if (assets) {
+      const selectedAssets = assets.data.map((asset) => asset.id);
+      socket.emit('getPrices', selectedAssets);
+    }
+
     socket.on('prices', (changes) => {
       setChanges(JSON.parse(changes));
     });
-  }, []);
+  }, [assets]);
 
   useEffect(() => {
     !assets && onLoading();

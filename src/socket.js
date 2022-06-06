@@ -8,27 +8,33 @@ const createSocket = (server) => {
   });
 
   io.on('connection', (socket) => {
-    const externalSocket = new W3CWebSocket(process.env.EXTERNAL_SOCKET_URL);
-    externalSocket.onerror = function () {
-      console.log('Connection Error');
-    };
+    let externalSocket;
 
-    externalSocket.onopen = function () {
-      console.log('WebSocket Client Connected');
-    };
+    socket.on('getPrices', (assets) => {
+      externalSocket = new W3CWebSocket(
+        `${process.env.EXTERNAL_SOCKET_URL}?assets=${assets.join(',')}`
+      );
+      externalSocket.onerror = function () {
+        console.log('Connection Error');
+      };
 
-    externalSocket.onmessage = function (e) {
-      console.log('Getting Data');
-      socket.emit('prices', e.data);
-    };
+      externalSocket.onopen = function () {
+        console.log('WebSocket Client Connected');
+      };
 
-    externalSocket.onclose = function (e) {
-      console.log('Closed');
-    };
+      externalSocket.onmessage = function (e) {
+        console.log('Getting Data');
+        socket.emit('prices', e.data);
+      };
+
+      externalSocket.onclose = function (e) {
+        console.log('Closed');
+      };
+    });
 
     socket.on('disconnect', async (reason) => {
       console.log('Disconnected');
-      externalSocket.close();
+      externalSocket && externalSocket.close();
     });
   });
 };

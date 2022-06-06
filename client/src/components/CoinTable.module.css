@@ -26,6 +26,10 @@
   animation: 0.8s ease-out downAnimation;
 }
 
+.loading {
+  display: none;
+}
+
 .table {
   width: 100%;
   font-size: 15px;

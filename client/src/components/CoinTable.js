@@ -1,79 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import styles from './CoinTable.module.css';
-import PercentageArea from './PercentageArea';
-import Price from './Price';
-import Logo from '../logo.svg';
-import SupplyPrice from './SupplyPrice';
+import CoinPage from './CoinPage';
+import LoadMoreButton from './LoadMoreButton';
 
-function CoinTable({ assets }) {
+function CoinTable() {
+  const [loading, setLoading] = useState(false);
+  const [loadMore, setLoadMore] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const pages = [];
+
+  for (let i = 0; i < page; i++) {
+    pages.push(
+      <CoinPage
+        key={i}
+        page={i + 1}
+        limit={50}
+        onLoading={() => {
+          page === 1 && setLoading(true);
+        }}
+        onSuccess={() => {
+          page === 1 && setLoading(false);
+          setLoadMore(false);
+        }}
+      />
+    );
+  }
+
   return (
-    <table className={styles.table}>
-      <thead className={styles.thead}>
-        <tr>
-          <th className={classNames(styles.th, styles.rank)}>#</th>
-          <th className={classNames(styles.th, styles.name)}>Name</th>
-          <th className={styles.th}>Price</th>
-          <th className={styles.th}>Market Cap</th>
-          <th className={styles.th}>Volume (24h)</th>
-          <th className={styles.th}>Circulating Supply</th>
-          <th className={styles.th}>24h %</th>
-        </tr>
-      </thead>
-      <tbody>
-        {assets.map((asset) => {
-          const price = Number(asset.priceUsd).toFixed(2);
-
-          const changePercent24Hr = Number(asset.changePercent24Hr);
-
-          const priceTdClassName = classNames(styles.td, {
-            [styles.up]: asset.changed === 'up',
-            [styles.down]: asset.changed === 'down',
-          });
-
-          return (
-            <tr className={styles.tbodytr} key={asset.id}>
-              <td className={classNames(styles.td, styles.rank)}>
-                {asset.rank}
-              </td>
-              <td className={classNames(styles.td, styles.name)}>
-                <div className={styles.nameblock}>
-                  <img
-                    src={`https://assets.coincap.io/assets/icons/${asset.symbol.toLowerCase()}@2x.png`}
-                    width={30}
-                    height={30}
-                    alt={asset.name}
-                    className={styles.image}
-                    onError={(e) => (e.target.src = Logo)}
-                  />
-                  <span>{asset.name}</span>
-                  <span className={styles.symbol}>{asset.symbol}</span>
-                </div>
-              </td>
-              <td key={price} className={priceTdClassName}>
-                <Price value={price} />
-              </td>
-              <td className={styles.td}>
-                <Price value={asset.marketCapUsd} />
-              </td>
-              <td className={styles.td}>
-                <Price value={asset.volumeUsd24Hr} />
-              </td>
-              <td className={styles.td}>
-                <SupplyPrice
-                  value={asset.supply}
-                  symbol={asset.symbol}
-                  max={asset.maxSupply}
-                />
-              </td>
-              <td className={styles.td}>
-                <PercentageArea value={changePercent24Hr} />
-              </td>
+    <>
+      {loading && <p>Loading...</p>}
+      <div
+        className={classNames(styles.container, { [styles.loading]: loading })}
+      >
+        <table className={styles.table}>
+          <thead className={styles.thead}>
+            <tr>
+              <th className={classNames(styles.th, styles.rank)}>#</th>
+              <th className={classNames(styles.th, styles.name)}>Name</th>
+              <th className={styles.th}>Price</th>
+              <th className={styles.th}>Market Cap</th>
+              <th className={styles.th}>Volume (24h)</th>
+              <th className={styles.th}>Circulating Supply</th>
+              <th className={styles.th}>24h %</th>
             </tr>
-          );
-        })}
-      </tbody>
-    </table>
+          </thead>
+          <tbody>{pages}</tbody>
+        </table>
+        <LoadMoreButton
+          loading={loadMore}
+          onClick={(e) => {
+            e.preventDefault();
+
+            setLoadMore(true);
+            setPage(page + 1);
+          }}
+        />
+      </div>
+    </>
   );
 }
 

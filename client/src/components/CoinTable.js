@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import styles from './CoinTable.module.css';
 import CoinPage from './CoinPage';
 import LoadMoreButton from './LoadMoreButton';
+import Loading from './Loading';
 
 function CoinTable() {
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ function CoinTable() {
 
   return (
     <>
-      {loading && <p>Loading...</p>}
+      {loading && <Loading showText={true} />}
       <div
         className={classNames(styles.container, { [styles.loading]: loading })}
       >

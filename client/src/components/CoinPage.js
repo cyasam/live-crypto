@@ -3,7 +3,6 @@ import useSWR from 'swr';
 import axios from 'axios';
 import PercentageArea from './PercentageArea';
 import Price from './Price';
-import Logo from '../logo.svg';
 import SupplyPrice from './SupplyPrice';
 import styles from './CoinTable.module.css';
 import classNames from 'classnames';
@@ -112,7 +111,7 @@ function CoinPage({ page, onSuccess, onLoading, limit }) {
                   height={30}
                   alt={asset.name}
                   className={styles.image}
-                  onError={(e) => (e.target.src = Logo)}
+                  onError={(e) => (e.target.src = '../logo.svg')}
                 />
                 <span>{asset.name}</span>
                 <span className={styles.symbol}>{asset.symbol}</span>

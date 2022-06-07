@@ -13,6 +13,10 @@ const fetchAssets = (query) => {
   return externalApi.get(`/assets${queryString && `?${queryString}`}`);
 };
 
+router.get('/', (req, res) => {
+  res.send('API works.');
+});
+
 router.get('/assets', async (req, res) => {
   try {
     const { data: assets } = await fetchAssets(req.query);
@@ -24,6 +28,10 @@ router.get('/assets', async (req, res) => {
 
     res.status(500).json({ message: 'Internal Server Error' });
   }
+});
+
+router.get('*', (req, res) => {
+  res.send('Not Found.');
 });
 
 export default router;

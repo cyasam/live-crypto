@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import styles from './CoinTable.module.css';
 import CoinPage from './CoinPage';
-import LoadMoreButton from './LoadMoreButton';
-import Loading from './Loading';
+import LoadMoreButton from '../LoadMoreButton';
+import Loading from '../Loading';
+
+import styles from './CoinTable.module.css';
 
 function CoinTable() {
   const [loading, setLoading] = useState(false);

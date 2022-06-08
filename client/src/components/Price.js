@@ -1,18 +1,18 @@
 import React from 'react';
 import { formatCurrency } from '@coingecko/cryptoformat';
 
-function Price({ value }) {
-  /*  if (value < 0.01) {
-    return <>${value}</>;
-  } */
+import styles from './Price.module.css';
+import classNames from 'classnames';
 
-  /*  const formatter = new Intl.NumberFormat('en-US', {
-    currency: currency ?? 'USD',
-  }); */
-
+function Price({ value, changeDirection }) {
   value = formatCurrency(value, 'USD', 'en');
 
-  return <>{value}</>;
+  const priceClassName = classNames({
+    [styles.up]: changeDirection === 'up',
+    [styles.down]: changeDirection === 'down',
+  });
+
+  return <span className={priceClassName}>{value}</span>;
 }
 
 export default Price;

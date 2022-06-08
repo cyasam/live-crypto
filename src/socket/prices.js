@@ -1,10 +1,10 @@
-import './env';
+import '../env';
 import { Server } from 'socket.io';
 import { w3cwebsocket as W3CWebSocket } from 'websocket';
 
-const createSocket = (server) => {
+const createPricesSocket = (server) => {
   const io = new Server(server, {
-    path: '/socket',
+    path: '/prices',
   });
 
   io.on('connection', (socket) => {
@@ -12,7 +12,7 @@ const createSocket = (server) => {
 
     socket.on('getPrices', (assets) => {
       externalSocket = new W3CWebSocket(
-        `${process.env.EXTERNAL_SOCKET_URL}?assets=${assets.join(',')}`
+        `${process.env.EXTERNAL_SOCKET_URL}?assets=${assets}`
       );
       externalSocket.onerror = function () {
         console.log('Connection Error');
@@ -23,7 +23,7 @@ const createSocket = (server) => {
       };
 
       externalSocket.onmessage = function (e) {
-        console.log('Getting Data');
+        //console.log('Getting Data');
         socket.emit('prices', e.data);
       };
 
@@ -39,4 +39,4 @@ const createSocket = (server) => {
   });
 };
 
-export default createSocket;
+export default createPricesSocket;

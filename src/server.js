@@ -3,8 +3,10 @@ import './env';
 import http from 'http';
 import express from 'express';
 import apiRoute from './api';
-import createSocket from './socket';
 import path from 'node:path';
+
+import createPricesSocket from './socket/prices';
+import createChatSocket from './socket/chat';
 
 const PORT = process.env.PORT || '3001';
 
@@ -20,7 +22,8 @@ app.get('/*', function (req, res) {
 
 const server = http.createServer(app);
 
-createSocket(server);
+createPricesSocket(server);
+createChatSocket(server);
 
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

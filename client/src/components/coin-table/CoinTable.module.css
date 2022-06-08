@@ -1,31 +1,3 @@
-@keyframes upAnimation {
-  0%,
-  80% {
-    color: #16c784;
-  }
-  100% {
-    color: inherit;
-  }
-}
-
-@keyframes downAnimation {
-  0%,
-  80% {
-    color: #ea3943;
-  }
-  100% {
-    color: inherit;
-  }
-}
-
-.td.up {
-  animation: 0.8s ease-out upAnimation;
-}
-
-.td.down {
-  animation: 0.8s ease-out downAnimation;
-}
-
 .loading {
   display: none;
 }
@@ -70,6 +42,11 @@
 .rank,
 .name {
   text-align: left;
+}
+
+.name a {
+  color: inherit;
+  text-decoration: none;
 }
 
 td.rank {

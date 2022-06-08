@@ -12,3 +12,8 @@
 .header h1 {
   margin: 0;
 }
+
+.header h1 a {
+  color: inherit;
+  text-decoration: none;
+}

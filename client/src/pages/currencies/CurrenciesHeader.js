@@ -1,40 +1,32 @@
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import useSWR from 'swr';
-import Loading from '../components/Loading';
-import Modal from '../components/Modal';
-import PercentageArea from '../components/PercentageArea';
-import Price from '../components/Price';
-import SupplyPrice from '../components/SupplyPrice';
-import usePriceSocket from '../hooks/use-price-socket';
-import { fetcher, processOneData } from '../utils';
+import PercentageArea from '../../components/PercentageArea';
+import Price from '../../components/Price';
+import SupplyPrice from '../../components/SupplyPrice';
+import usePriceSocket from '../../hooks/use-price-socket';
+import { fetcher, processOneData } from '../../utils';
+import styles from './CurrenciesHeader.module.css';
 
-import styles from './Currencies.module.css';
-
-function Currencies() {
-  const params = useParams();
-  const { currencyId } = params;
-
+function CurrenciesHeader({ currencyId }) {
   const { data: asset, error } = useSWR(`/api/assets/${currencyId}`, fetcher, {
     refreshInterval: 60 * 1000,
   });
 
-  const { changes } = usePriceSocket(currencyId);
+  const { changes } = usePriceSocket(asset?.data.id);
 
-  const currency = asset ? processOneData(asset.data, changes) : null;
+  const currency = asset ? processOneData(asset?.data, changes) : null;
+
+  if (!currency) return null;
 
   return (
-    <Modal>
-      {!currency && !error && (
-        <div className={styles.loading}>
-          <Loading />
-        </div>
-      )}
+    <div className={styles.header}>
       {error && <div className={styles.error}>Failed to Load.</div>}
+
       {currency && (
-        <div className={styles.header}>
+        <>
           <div className={styles.maininfo}>
             <h1>
-              {currency.name}({currency.symbol})
+              {currency.name} ({currency.symbol})
             </h1>
             <div className={styles.pricearea}>
               <Price
@@ -75,10 +67,10 @@ function Currencies() {
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
-    </Modal>
+    </div>
   );
 }
 
-export default Currencies;
+export default CurrenciesHeader;

@@ -4,7 +4,7 @@ import { AuthProvider } from './hooks/use-auth';
 import styles from './App.module.css';
 import Header from './components/header-area/Header';
 import Home from './pages/Home';
-import Currencies from './pages/Currencies';
+import Currencies from './pages/currencies/Currencies';
 import NotFound from './components/NotFound';
 
 function App() {

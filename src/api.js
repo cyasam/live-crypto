@@ -17,6 +17,14 @@ const fetchAssetById = (currencyId) => {
   return externalApi.get(`/assets/${currencyId}`);
 };
 
+const fetchAssetHistoryById = (currencyId, query) => {
+  const params = new URLSearchParams(query);
+  const queryString = params.toString();
+  return externalApi.get(
+    `/assets/${currencyId}/history${queryString && `?${queryString}`}`
+  );
+};
+
 router.get('/', (req, res) => {
   res.send('API works.');
 });
@@ -37,6 +45,22 @@ router.get('/assets', async (req, res) => {
 router.get('/assets/:currencyId', async (req, res) => {
   try {
     const { data: asset } = await fetchAssetById(req.params.currencyId);
+    res.status(200).json(asset);
+  } catch (error) {
+    if (error.response) {
+      return res.status(error.response.status).json(error.response.data);
+    }
+
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+router.get('/assets/:currencyId/history', async (req, res) => {
+  try {
+    const { data: asset } = await fetchAssetHistoryById(
+      req.params.currencyId,
+      req.query
+    );
     res.status(200).json(asset);
   } catch (error) {
     if (error.response) {

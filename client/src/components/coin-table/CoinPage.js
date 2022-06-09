@@ -21,7 +21,6 @@ function CoinPage({ page, onSuccess, onLoading, limit }) {
     fetcher,
     {
       refreshInterval: 60 * 1000,
-      revalidateOnFocus: false,
       onSuccess() {
         onSuccess();
       },

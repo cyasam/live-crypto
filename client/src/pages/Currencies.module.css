@@ -1,0 +1,60 @@
+.loading,
+.error {
+  display: flex;
+  height: 200px;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: rgb(24 22 96);
+  color: #fff;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.header .value {
+  margin: 10px 0 0 0;
+  font-weight: 500;
+}
+
+.pricearea {
+  display: flex;
+  margin-top: 12px;
+}
+
+.price {
+  margin-right: 16px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.percentage {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.maininfo {
+  margin: 14px 20px;
+}
+
+.otherinfo {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.otherinfo .col {
+  margin: 14px 20px;
+}

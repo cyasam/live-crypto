@@ -12,11 +12,11 @@ progress::-webkit-progress-bar {
 }
 
 progress::-webkit-progress-value {
-  background-color: rgb(207, 214, 228);
+  background-color: rgb(164, 190, 240);
   border-radius: 100px;
 }
 
 progress::-moz-progress-bar {
-  background-color: rgb(207, 214, 228);
+  background-color: rgb(164, 190, 240);
   border-radius: 100px;
 }

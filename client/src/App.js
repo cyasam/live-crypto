@@ -5,6 +5,7 @@ import styles from './App.module.css';
 import Header from './components/header-area/Header';
 import Home from './pages/Home';
 import Currencies from './pages/Currencies';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -15,18 +16,10 @@ function App() {
 
           <div className="container">
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/currencies" element={<Currencies />}>
-                <Route path=":currencyId" element={<Currencies />} />
+              <Route path="/" element={<Home />}>
+                <Route path="currencies/:currencyId" element={<Currencies />} />
               </Route>
-              <Route
-                path="*"
-                element={
-                  <main style={{ padding: '1rem' }}>
-                    <p>There's nothing here!</p>
-                  </main>
-                }
-              />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
         </div>

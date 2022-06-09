@@ -1,7 +1,7 @@
 @keyframes upAnimation {
   0%,
   80% {
-    color: #16c784;
+    color: var(--up-color);
   }
   100% {
     color: inherit;
@@ -11,7 +11,7 @@
 @keyframes downAnimation {
   0%,
   80% {
-    color: #ea3943;
+    color: var(--down-color);
   }
   100% {
     color: inherit;

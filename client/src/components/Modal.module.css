@@ -1,0 +1,53 @@
+.container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(1px);
+
+  --inner-padding: 30px;
+}
+
+.inner {
+  width: 100%;
+  max-height: 100%;
+  overflow: auto;
+  padding: var(--inner-padding) calc(var(--inner-padding) * 2);
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 5px;
+  min-height: 200px;
+  overflow: hidden;
+}
+
+.closebtn {
+  position: absolute;
+  top: var(--inner-padding);
+  right: var(--inner-padding);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  background-color: rgb(24 22 96);
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.closebtn svg {
+  width: 24px;
+  height: 24px;
+}

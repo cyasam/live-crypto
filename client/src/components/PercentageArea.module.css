@@ -7,14 +7,14 @@
 
 .arrow.up {
   margin-top: 4px;
-  border-color: #16c784;
+  border-color: var(--up-color);
   transform: rotate(-135deg);
   -webkit-transform: rotate(-135deg);
 }
 
 .arrow.down {
   margin-top: -4px;
-  border-color: #ea3943;
+  border-color: var(--down-color);
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
 }
@@ -27,15 +27,15 @@
 }
 
 .text.up {
-  color: #16c784;
+  color: var(--up-color);
 }
 .text.down {
-  color: #ea3943;
+  color: var(--down-color);
 }
 
 .indicator {
   display: inline-block;
-  margin-right: 6px;
+  margin-left: 6px;
 }
 
 .percentage {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
   TimeScale,
@@ -39,12 +39,20 @@ const processData = (currencyData) => {
 };
 
 function PriceChart({ data }) {
-  const prices = processData(data);
+  const [chartData, setChartData] = useState(null);
+
+  useEffect(() => {
+    data && setChartData(data);
+  }, [data]);
+
+  if (!chartData) return null;
+
+  const prices = processData(chartData);
 
   const backgroundColor = 'rgba(230,239,244, 0.5)';
   const borderColor = 'rgb(214 106 112)';
 
-  const chartData = {
+  const lastChartData = {
     datasets: [
       {
         data: prices,
@@ -55,7 +63,7 @@ function PriceChart({ data }) {
     ],
   };
 
-  return <Line options={options} data={chartData} />;
+  return <Line options={options} data={lastChartData} />;
 }
 
 export default PriceChart;

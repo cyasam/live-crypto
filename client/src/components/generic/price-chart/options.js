@@ -1,6 +1,9 @@
 import { formatCurrency } from '@coingecko/cryptoformat';
 
 const options = {
+  animation: {
+    duration: 0,
+  },
   scales: {
     x: {
       grid: { display: false },
@@ -9,9 +12,8 @@ const options = {
         displayFormats: { hour: 'HH:mm' },
       },
       ticks: {
-        spanGrid: 1,
         autoSkip: false,
-        maxRotation: 0,
+        maxRotation: 30,
         major: {
           enabled: true,
         },

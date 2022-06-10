@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import useSWR from 'swr';
 import PercentageArea from '../../components/PercentageArea';
 import Price from '../../components/Price';
 import SupplyPrice from '../../components/SupplyPrice';
+import LoadingContext from '../../context/LoadingContext';
 import usePriceSocket from '../../hooks/use-price-socket';
 import { fetcher, processOneData } from '../../utils';
 import styles from './CurrenciesHeader.module.css';
@@ -12,11 +13,14 @@ function CurrenciesHeader({ currencyId }) {
     refreshInterval: 60 * 1000,
   });
 
+  const { setLoadingStatus } = useContext(LoadingContext);
   const { changes } = usePriceSocket(asset?.data.id);
 
-  const currency = asset ? processOneData(asset?.data, changes) : null;
+  useEffect(() => {
+    setLoadingStatus(!asset ? true : false);
+  }, [asset, setLoadingStatus]);
 
-  if (!currency) return null;
+  const currency = asset ? processOneData(asset?.data, changes) : null;
 
   return (
     <div className={styles.header}>

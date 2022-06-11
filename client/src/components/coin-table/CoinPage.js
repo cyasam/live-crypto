@@ -9,6 +9,7 @@ import { fetcher, processAllData } from '../../utils';
 
 import styles from './CoinTable.module.css';
 import usePriceSocket from '../../hooks/use-price-socket';
+import CoinPageLoader from './CoinPageLoader';
 
 function CoinPage({ page, onSuccess, onLoading, onError, limit }) {
   const urlSearchParams = { limit, offset: (page - 1) * limit };
@@ -42,7 +43,7 @@ function CoinPage({ page, onSuccess, onLoading, onError, limit }) {
 
   const newAssets = assets ? processAllData(assets.data, changes) : null;
 
-  if (!newAssets) return null;
+  if (!newAssets) return <CoinPageLoader />;
 
   return (
     <>

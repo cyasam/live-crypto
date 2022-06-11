@@ -1,7 +1,3 @@
-.loading {
-  display: none;
-}
-
 .table {
   width: 100%;
   font-size: 15px;
@@ -72,4 +68,34 @@ td.rank {
   margin-right: 6px;
   border-radius: 100%;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.loading .td.placeholder {
+  height: 80px;
+  padding: 2px;
+}
+
+.loading .td.placeholder div {
+  max-width: 120px;
+  height: 30px;
+  background-color: rgba(224, 220, 220, 0.8);
+  margin-left: auto;
+}
+
+.loading .td.rank div {
+  max-width: 20px;
+  margin-left: 0;
+}
+
+.loading .td.name div {
+  max-width: 150px;
+  margin-left: 0;
+}
+
+.loading .td.supply div {
+  max-width: 150px;
+}
+
+.loading .td:last-child div {
+  max-width: 70px;
 }

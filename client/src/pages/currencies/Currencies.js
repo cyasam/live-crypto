@@ -11,7 +11,7 @@ function Currencies() {
   const { currencyId } = params;
 
   return (
-    <Modal>
+    <Modal backUrl="/">
       <div className="page">
         <CurrenciesHeader currencyId={currencyId} />
         <div className={styles.row}>

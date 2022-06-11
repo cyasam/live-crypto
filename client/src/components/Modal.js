@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import styles from './Modal.module.css';
 
-function Modal({ children }) {
+function Modal({ children, backUrl }) {
   const navigate = useNavigate();
   const contentRef = useRef();
 
@@ -15,7 +15,9 @@ function Modal({ children }) {
   }, []);
 
   const clickOutside = (e) => {
-    !contentRef.current.contains(e.target) && navigate(-1);
+    if (!contentRef.current.contains(e.target)) {
+      backUrl && navigate(backUrl);
+    }
   };
 
   return createPortal(

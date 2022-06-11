@@ -10,7 +10,7 @@ import { fetcher, processAllData } from '../../utils';
 import styles from './CoinTable.module.css';
 import usePriceSocket from '../../hooks/use-price-socket';
 
-function CoinPage({ page, onSuccess, onLoading, limit }) {
+function CoinPage({ page, onSuccess, onLoading, onError, limit }) {
   const urlSearchParams = { limit, offset: (page - 1) * limit };
 
   const params = new URLSearchParams(urlSearchParams);
@@ -36,15 +36,16 @@ function CoinPage({ page, onSuccess, onLoading, limit }) {
     !assets && onLoading();
   }, [assets, onLoading]);
 
-  if (!assets) {
-    return null;
-  }
+  useEffect(() => {
+    error && onError();
+  }, [error, onError]);
 
-  const newAssets = processAllData(assets.data, changes);
+  const newAssets = assets ? processAllData(assets.data, changes) : null;
+
+  if (!newAssets) return null;
 
   return (
     <>
-      {error && <p>Failed to Load</p>}
       {newAssets.map((asset) => {
         const price = asset.priceUsd;
         const changePercent24Hr = asset.changePercent24Hr;

@@ -1,31 +1,29 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import useSWR from 'swr';
+import Error from '../../components/Error';
 import PercentageArea from '../../components/PercentageArea';
 import Price from '../../components/Price';
 import SupplyPrice from '../../components/SupplyPrice';
-import LoadingContext from '../../context/LoadingContext';
 import usePriceSocket from '../../hooks/use-price-socket';
 import { fetcher, processOneData } from '../../utils';
 import styles from './CurrenciesHeader.module.css';
+import CurrenciesHeaderLoader from './CurrenciesHeaderLoader';
 
 function CurrenciesHeader({ currencyId }) {
   const { data: asset, error } = useSWR(`/api/assets/${currencyId}`, fetcher, {
     refreshInterval: 60 * 1000,
   });
 
-  const { setLoadingStatus } = useContext(LoadingContext);
   const { changes } = usePriceSocket(asset?.data.id);
-
-  useEffect(() => {
-    setLoadingStatus(!asset ? true : false);
-  }, [asset, setLoadingStatus]);
 
   const currency = asset ? processOneData(asset?.data, changes) : null;
 
+  if (!currency) return <CurrenciesHeaderLoader />;
+
+  if (error) return <Error />;
+
   return (
     <div className={styles.header}>
-      {error && <div className={styles.error}>Failed to Load.</div>}
-
       {currency && (
         <>
           <div className={styles.maininfo}>

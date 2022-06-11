@@ -1,12 +1,12 @@
 import classNames from 'classnames';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
+import Error from '../../components/Error';
 import PriceChart from '../../components/generic/price-chart/PriceChart';
-import Loading from '../../components/Loading';
-import LoadingContext from '../../context/LoadingContext';
 import { fetcher } from '../../utils';
 
-import styles from './PriceContainer.module.css';
+import styles from './PriceChartContainer.module.css';
+import PriceChartContainerLoader from './PriceChartContainerLoader';
 
 const chartTypeList = ['1D', '1W', '1M', '3M', '6M', '1Y', 'all'];
 
@@ -50,19 +50,9 @@ const createQuery = (chartType) => {
 const LoadingComponent = ({ data, error }) => {
   let component = null;
 
-  if (!data)
-    component = (
-      <div className={styles.loading}>
-        <Loading />
-      </div>
-    );
+  if (!data) component = <PriceChartContainerLoader />;
 
-  if (error)
-    component = (
-      <div className={styles.error}>
-        <p>Failed to load.</p>
-      </div>
-    );
+  if (error) component = <Error />;
 
   return component;
 };
@@ -83,15 +73,9 @@ function PriceChartContainer({ currencyId }) {
     }
   );
 
-  const { setLoadingStatus } = useContext(LoadingContext);
-
   useEffect(() => {
-    if (!chartType) {
-      setLoadingStatus(!chartType ? true : false);
-    }
-
     setQueryString(createQuery(chartType));
-  }, [chartType, setLoadingStatus]);
+  }, [chartType]);
 
   return (
     <div className={styles.chartarea}>

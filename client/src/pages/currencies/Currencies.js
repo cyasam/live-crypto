@@ -1,5 +1,4 @@
 import { useParams } from 'react-router-dom';
-import { LoadingProvider } from '../../context/LoadingContext';
 import Modal from '../../components/Modal';
 
 import CurrenciesHeader from './CurrenciesHeader';
@@ -13,17 +12,15 @@ function Currencies() {
 
   return (
     <Modal>
-      <LoadingProvider>
-        <div className="page">
-          <CurrenciesHeader currencyId={currencyId} />
-          <div className={styles.row}>
-            <div className={styles.colchart}>
-              <PriceChartContainer currencyId={currencyId} />
-            </div>
-            <div className={styles.colchat}>Chat</div>
+      <div className="page">
+        <CurrenciesHeader currencyId={currencyId} />
+        <div className={styles.row}>
+          <div className={styles.colchart}>
+            <PriceChartContainer currencyId={currencyId} />
           </div>
+          <div className={styles.colchat}>Chat</div>
         </div>
-      </LoadingProvider>
+      </div>
     </Modal>
   );
 }

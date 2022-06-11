@@ -1,13 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import CoinPage from './CoinPage';
 import LoadMoreButton from '../LoadMoreButton';
 
 import styles from './CoinTable.module.css';
-import LoadingContext from '../../context/LoadingContext';
+import Loading from '../Loading';
 
 function CoinTable() {
-  const { setLoadingStatus } = useContext(LoadingContext);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const [page, setPage] = useState(1);
 
@@ -20,42 +21,55 @@ function CoinTable() {
         page={i + 1}
         limit={50}
         onLoading={() => {
-          page === 1 && setLoadingStatus(true);
+          !loadMore && setLoading(true);
+          setError(false);
         }}
         onSuccess={() => {
-          page === 1 && setLoadingStatus(false);
+          !loadMore && setLoading(false);
           setLoadMore(false);
+          setError(false);
+        }}
+        onError={() => {
+          !loadMore && setLoading(false);
+          setLoadMore(false);
+          setError(true);
         }}
       />
     );
   }
 
   return (
-    <div className={classNames(styles.container)}>
-      <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr>
-            <th className={classNames(styles.th, styles.rank)}>#</th>
-            <th className={classNames(styles.th, styles.name)}>Name</th>
-            <th className={styles.th}>Price</th>
-            <th className={styles.th}>Market Cap</th>
-            <th className={styles.th}>Volume (24h)</th>
-            <th className={styles.th}>Circulating Supply</th>
-            <th className={styles.th}>24h %</th>
-          </tr>
-        </thead>
-        <tbody>{pages}</tbody>
-      </table>
-      <LoadMoreButton
-        loading={loadMore}
-        onClick={(e) => {
-          e.preventDefault();
+    <>
+      {loading && <Loading />}
+      <div
+        className={classNames(styles.container, { [styles.loading]: loading })}
+      >
+        <table className={styles.table}>
+          <thead className={styles.thead}>
+            <tr>
+              <th className={classNames(styles.th, styles.rank)}>#</th>
+              <th className={classNames(styles.th, styles.name)}>Name</th>
+              <th className={styles.th}>Price</th>
+              <th className={styles.th}>Market Cap</th>
+              <th className={styles.th}>Volume (24h)</th>
+              <th className={styles.th}>Circulating Supply</th>
+              <th className={styles.th}>24h %</th>
+            </tr>
+          </thead>
+          <tbody>{pages}</tbody>
+        </table>
+        <LoadMoreButton
+          loading={loadMore}
+          error={error}
+          onClick={(e) => {
+            e.preventDefault();
 
-          setLoadMore(true);
-          setPage(page + 1);
-        }}
-      />
-    </div>
+            setLoadMore(true);
+            setPage(page + 1);
+          }}
+        />
+      </div>
+    </>
   );
 }
 

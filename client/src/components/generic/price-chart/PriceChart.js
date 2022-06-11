@@ -15,18 +15,6 @@ import 'chartjs-adapter-moment';
 import { Line } from 'react-chartjs-2';
 import options from './options';
 
-ChartJS.register(
-  TimeScale,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
-
 const processData = (currencyData) => {
   const prices = currencyData.map((currency) => {
     return {
@@ -40,6 +28,20 @@ const processData = (currencyData) => {
 
 function PriceChart({ data }) {
   const [chartData, setChartData] = useState(null);
+
+  useEffect(() => {
+    ChartJS.register(
+      TimeScale,
+      CategoryScale,
+      LinearScale,
+      PointElement,
+      LineElement,
+      Title,
+      Tooltip,
+      Legend,
+      Filler
+    );
+  }, []);
 
   useEffect(() => {
     data && setChartData(data);

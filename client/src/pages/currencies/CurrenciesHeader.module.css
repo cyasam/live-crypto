@@ -1,12 +1,3 @@
-.loading,
-.error {
-  display: flex;
-  width: 100%;
-  height: 200px;
-  justify-content: center;
-  align-items: center;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -58,4 +49,22 @@
 
 .otherinfo .col {
   margin: 14px 20px;
+}
+
+.header.loading .maininfo {
+  width: 200px;
+  height: 30px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.header.loading .maininfo {
+  width: 200px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.header.loading .otherinfo .col .value {
+  width: 200px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
 }

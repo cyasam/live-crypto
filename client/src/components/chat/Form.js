@@ -16,7 +16,7 @@ function Form({ isLoggedIn, sendMessage }) {
 
         if (message.length === 0) return;
 
-        sendMessage(message);
+        sendMessage(message.trim());
         setMessage('');
       }}
     >
@@ -26,7 +26,7 @@ function Form({ isLoggedIn, sendMessage }) {
         placeholder="Enter message"
         value={message}
         onChange={(e) => {
-          const text = e.target.value.trim();
+          const text = e.target.value;
           setMessage(text);
         }}
       />

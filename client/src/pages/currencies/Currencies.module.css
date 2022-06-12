@@ -2,6 +2,13 @@
   display: flex;
 }
 
-.row .colchart {
+.colchart {
   width: 70%;
+  padding: 20px;
+}
+
+.colchat {
+  width: 30%;
+  display: flex;
+  padding: 20px;
 }

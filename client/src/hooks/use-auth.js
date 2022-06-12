@@ -1,39 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import jwt_decode from 'jwt-decode';
-
-const isExpired = (loginTime, expiresTime) => {
-  return expiresTime && new Date().getTime() > loginTime + expiresTime;
-};
-
-const isLoggedIn = () => {
-  return localStorage.getItem('token') || localStorage.getItem('logintime');
-};
-
-const removeSession = (callback) => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('logintime');
-
-  if (typeof callback === 'function') callback();
-};
-
-const createSession = (token, loginTime) => {
-  localStorage.setItem('token', token);
-  localStorage.setItem('logintime', loginTime);
-};
-
-const checkAuth = () => {
-  const existedToken = localStorage.getItem('token');
-  const existedLoginTime = localStorage.getItem('logintime');
-
-  if (!existedToken || !existedLoginTime) {
-    removeSession();
-  }
-
-  return {
-    existedToken,
-    existedLoginTime,
-  };
-};
+import supabase from '../utils/supabase';
 
 const AuthContext = createContext();
 
@@ -43,46 +9,52 @@ const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const auth = useProvideAuth();
+
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 };
 
 const useProvideAuth = () => {
-  const { existedToken, existedLoginTime } = checkAuth();
+  const [user, setUser] = useState(null);
 
-  const [loginTime, setLoginTime] = useState(() => {
-    return existedLoginTime && Number(existedLoginTime);
-  });
-  const [token, setToken] = useState(existedToken);
-
-  const login = (token) => {
-    const time = new Date().getTime();
-    setToken(token);
-    setLoginTime(time);
-    createSession(token, time);
-  };
-
-  const logout = () => {
-    removeSession(() => {
-      setToken(null);
-      setLoginTime(null);
+  const login = async () => {
+    const { error } = await supabase.auth.signIn({
+      provider: 'google',
     });
+
+    if (error) throw error;
   };
 
-  const user = token ? jwt_decode(token) : null;
-  const expiresTime = user ? (user?.exp - user?.iat) * 1000 : null;
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) throw error;
+  };
+
+  const getSession = () => {
+    return supabase.auth.session();
+  };
 
   useEffect(() => {
-    isExpired(loginTime, expiresTime) && logout();
-  }, [loginTime, user, expiresTime]);
+    const session = getSession();
+    setUser(session?.user?.user_metadata);
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === 'SIGNED_IN') {
+          setUser(session?.user?.user_metadata);
+        } else if (event === 'SIGNED_OUT') {
+          setUser(null);
+        }
+      }
+    );
+
+    return () => authListener.unsubscribe();
+  }, []);
 
   return {
-    user: user && {
-      email: user.email,
-      name: user.name,
-      picture: user.picture,
-      expiresDate: loginTime + expiresTime,
-    },
-    isLoggedIn,
+    userId: getSession()?.user?.id,
+    user,
+    isLoggedIn: !!user,
     login,
     logout,
   };

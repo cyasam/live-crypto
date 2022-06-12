@@ -2,3 +2,31 @@
   display: flex;
   align-items: center;
 }
+
+.userpicture {
+  overflow: hidden;
+  border-radius: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-right: 10px;
+}
+
+.userdetail p {
+  margin: 3px 0;
+  font-size: 13px;
+}
+
+.userdetail .name {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.userarea button {
+  background-color: #364e7a;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  height: 30px;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 0 10px;
+}

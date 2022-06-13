@@ -1,0 +1,40 @@
+.messagearea {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(104, 104, 104, 0.3);
+}
+
+.messagearea:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.userinfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.name {
+  margin: -2px 0 0 0;
+  font-weight: 500;
+}
+
+.picture {
+  margin-right: 8px;
+  border-radius: 100%;
+}
+
+.message {
+  margin: 0;
+  margin-left: 30px;
+}
+
+.date,
+.info {
+  font-size: 12px;
+  margin-left: 10px;
+  color: rgb(104, 104, 104);
+}

@@ -13,38 +13,6 @@
   flex: 1;
   max-height: 100%;
   overflow: auto;
-  padding: 10px;
-  font-size: 13px;
-}
-
-.messagearea {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 14px;
-}
-
-.messagearea.me {
-  align-items: flex-end;
-  margin-left: auto;
-}
-
-.userinfo {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-}
-
-.name {
-  margin: -2px 0 0 0;
-  font-weight: 500;
-}
-
-.picture {
-  margin-right: 8px;
-  border-radius: 100%;
-}
-
-.message {
-  margin: 0;
-  margin-left: 26px;
+  padding: 5px;
+  font-size: 15px;
 }

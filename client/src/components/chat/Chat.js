@@ -1,42 +1,55 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
+import { AnimatePresence } from 'framer-motion';
+import { v4 as uuidv4 } from 'uuid';
+
 import useAuth from '../../hooks/use-auth';
 import Form from './Form';
 import Loading from '../Loading';
 
-import styles from './Chat.module.css';
-import classNames from 'classnames';
+import ChatItem from './ChatItem';
 
-let socket;
+import styles from './Chat.module.css';
 
 function Chat({ room }) {
-  const { userId, user, isLoggedIn } = useAuth();
+  const { user, token, isLoggedIn } = useAuth();
   const [connected, setConnected] = useState(false);
   const [messages, setMessages] = useState([]);
+
+  const socketRef = useRef();
 
   const mounted = useRef(false);
 
   const sendMessage = useCallback(
-    (socket, message) => {
-      socket.emit('send-message', {
+    (message) => {
+      const messageObj = {
+        id: uuidv4(),
         user: {
-          id: userId,
-          name: user?.name,
-          picture: user?.picture,
+          id: user.id,
+          name: user.name,
+          picture: user.picture,
         },
         message,
-      });
+      };
+
+      setMessages((messages) => [
+        { ...messageObj, status: 'sending' },
+        ...messages,
+      ]);
+      socketRef.current.emit('send-message', { ...messageObj, token });
     },
-    [userId, user?.name, user?.picture]
+    [user, token, socketRef]
   );
 
   useEffect(() => {
     if (mounted.current || connected) return;
     mounted.current = true;
 
-    socket = io('/', {
+    socketRef.current = io('/', {
       path: '/chat',
     });
+
+    const socket = socketRef.current;
 
     socket.on('connect', () => {
       setConnected(true);
@@ -48,6 +61,21 @@ function Chat({ room }) {
 
       socket.on('get-message', (message) => {
         setMessages((messages) => [message, ...messages]);
+      });
+
+      socket.on('message-sent', (sentMessage) => {
+        setMessages((messages) => {
+          const processedMessages = messages.map((message) => {
+            const { id, created_at } = sentMessage;
+            if (message.id === id) {
+              message.status = 'sent';
+              message.created_at = created_at;
+            }
+            return message;
+          });
+
+          return processedMessages;
+        });
       });
     });
 
@@ -61,34 +89,16 @@ function Chat({ room }) {
       ) : (
         <>
           <div className={styles.chatarea}>
-            {messages?.map((data, index) => {
-              return (
-                <div
-                  key={index}
-                  className={classNames(styles.messagearea, {
-                    [styles.me]: userId === data.user.id,
-                  })}
-                >
-                  <div className={styles.userinfo}>
-                    {data?.user?.picture && (
-                      <img
-                        className={styles.picture}
-                        src={data.user.picture}
-                        width="18"
-                        height="18"
-                        alt={data.user.name}
-                      />
-                    )}
-                    <p className={styles.name}>{data.user.name}</p>
-                  </div>
-                  <p className={styles.message}>{data.message}</p>
-                </div>
-              );
-            })}
+            <AnimatePresence>
+              {messages?.map((message) => {
+                return <ChatItem key={message.id} message={message} />;
+              })}
+            </AnimatePresence>
           </div>
           <Form
             isLoggedIn={isLoggedIn}
-            sendMessage={(message) => sendMessage(socket, message)}
+            userPicture={user?.picture}
+            sendMessage={(message) => sendMessage(message)}
           />
         </>
       )}

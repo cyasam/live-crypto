@@ -1,6 +1,13 @@
 .form {
   display: flex;
+  align-items: center;
+  padding-left: 10px;
   border-top: 1px solid rgb(248, 197, 197);
+  background-color: rgb(248, 248, 248);
+}
+
+.picture {
+  border-radius: 100%;
 }
 
 .input {
@@ -8,17 +15,22 @@
   height: 40px;
   padding: 0 10px;
   border: none;
+  background-color: transparent;
 }
 
 .input:focus {
-  outline: 1px solid #ccc;
-  background-color: rgb(248, 248, 248);
+  outline: none;
 }
+
 .button {
   width: 60px;
+  height: 100%;
   background-color: rgb(24 22 96);
   color: #fff;
   border: none;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .notification {

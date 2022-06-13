@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import styles from './Form.module.css';
 
-function Form({ isLoggedIn, sendMessage }) {
+function Form({ isLoggedIn, userPicture, sendMessage }) {
   const [message, setMessage] = useState('');
 
   if (!isLoggedIn)
@@ -20,10 +20,19 @@ function Form({ isLoggedIn, sendMessage }) {
         setMessage('');
       }}
     >
+      {userPicture && (
+        <img
+          className={styles.picture}
+          src={userPicture}
+          width="24"
+          height="24"
+          alt="user"
+        />
+      )}
       <input
         className={styles.input}
         type="text"
-        placeholder="Enter message"
+        placeholder="Send a message"
         value={message}
         onChange={(e) => {
           const text = e.target.value;
@@ -31,7 +40,7 @@ function Form({ isLoggedIn, sendMessage }) {
         }}
       />
       <button className={styles.button} type="submit">
-        Send
+        Chat
       </button>
     </form>
   );

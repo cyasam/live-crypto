@@ -35,9 +35,6 @@ const useProvideAuth = () => {
   };
 
   useEffect(() => {
-    const session = getSession();
-    setUser(session?.user?.user_metadata);
-
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         if (event === 'SIGNED_IN') {
@@ -51,9 +48,18 @@ const useProvideAuth = () => {
     return () => authListener.unsubscribe();
   }, []);
 
+  const session = getSession();
+  useEffect(() => {
+    const user = session
+      ? { ...session?.user?.user_metadata, id: session?.user?.id }
+      : null;
+
+    setUser(user);
+  }, [session]);
+
   return {
-    userId: getSession()?.user?.id,
     user,
+    token: session.access_token,
     isLoggedIn: !!user,
     login,
     logout,

@@ -59,7 +59,7 @@ const useProvideAuth = () => {
 
   return {
     user,
-    token: session.access_token,
+    token: session?.access_token,
     isLoggedIn: !!user,
     login,
     logout,

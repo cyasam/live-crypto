@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-import styles from './CoinTable.module.css';
+import styles from './CoinTableRow.module.css';
 
 function CoinPageLoader() {
   const rows = [];

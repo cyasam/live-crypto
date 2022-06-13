@@ -1,8 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { io } from 'socket.io-client';
 
+import create from 'zustand';
+
+export const usePriceSocketStore = create((set) => ({
+  changes: null,
+  setChanges: (data) => set(() => ({ changes: data })),
+}));
+
 const usePriceSocket = (params) => {
-  const [changes, setChanges] = useState(null);
+  const setChanges = usePriceSocketStore((state) => state.setChanges);
 
   useEffect(() => {
     let socket;
@@ -22,9 +29,9 @@ const usePriceSocket = (params) => {
     }
 
     return () => params && socket.disconnect();
-  }, [params]);
+  }, [params, setChanges]);
 
-  return { changes };
+  return null;
 };
 
 export default usePriceSocket;

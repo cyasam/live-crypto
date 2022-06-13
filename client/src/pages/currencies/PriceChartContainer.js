@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import Error from '../../components/Error';
-import PriceChart from '../../components/generic/price-chart/PriceChart';
+import Error from '../../components/generic/Error';
+import PriceChart from '../../components/price-chart/PriceChart';
 import { fetcher } from '../../utils';
 
 import styles from './PriceChartContainer.module.css';

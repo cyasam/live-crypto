@@ -1,26 +1,24 @@
 import React from 'react';
 import useSWR from 'swr';
-import Error from '../../components/Error';
-import PercentageArea from '../../components/PercentageArea';
-import Price from '../../components/Price';
+import Error from '../../components/generic/Error';
+import PercentageArea from '../../components/percentage-area/PercentageArea';
 import SupplyPrice from '../../components/SupplyPrice';
-import usePriceSocket from '../../hooks/use-price-socket';
 import { fetcher, processOneData } from '../../utils';
 import styles from './CurrenciesHeader.module.css';
 import CurrenciesHeaderLoader from './CurrenciesHeaderLoader';
+import Price from '../../components/price-area/Price';
+import PriceArea from '../../components/price-area/PriceArea';
 
 function CurrenciesHeader({ currencyId }) {
   const { data: asset, error } = useSWR(`/api/assets/${currencyId}`, fetcher, {
     refreshInterval: 60 * 1000,
   });
 
-  const { changes } = usePriceSocket(asset?.data.id);
-
-  const currency = asset ? processOneData(asset?.data, changes) : null;
-
-  if (!currency) return <CurrenciesHeaderLoader />;
+  if (!asset) return <CurrenciesHeaderLoader />;
 
   if (error) return <Error />;
+
+  const currency = processOneData(asset.data);
 
   return (
     <div className={styles.header}>
@@ -30,17 +28,19 @@ function CurrenciesHeader({ currencyId }) {
             <h1>
               {currency.name} ({currency.symbol})
             </h1>
+
             <div className={styles.pricearea}>
-              <Price
-                className={styles.price}
-                key={currency.priceUsd}
-                value={currency.priceUsd}
-                changeDirection={currency.changed}
-              />
-              <PercentageArea
-                className={styles.percentage}
-                value={currency.changePercent24Hr}
-              />
+              <div className={styles.price}>
+                <PriceArea id={currency.id} value={currency.priceUsd} />
+              </div>
+
+              <div className={styles.percentage}>
+                <PercentageArea
+                  id={currency.id}
+                  value={currency.priceUsd}
+                  price24hUsd={currency.price24hUsd}
+                />
+              </div>
             </div>
           </div>
           <div className={styles.otherinfo}>

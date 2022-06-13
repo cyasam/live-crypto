@@ -4,11 +4,11 @@ import { AuthProvider } from './hooks/use-auth';
 
 import styles from './App.module.css';
 import Header from './components/header-area/Header';
-import Loading from './components/Loading';
+import Loading from './components/generic/Loading';
 
 const Home = loadable(() => import('./pages/Home'));
 const Currencies = loadable(() => import('./pages/currencies/Currencies'));
-const NotFound = loadable(() => import('./components/NotFound'));
+const NotFound = loadable(() => import('./pages/NotFound'));
 
 function App() {
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import CoinPage from './CoinPage';
-import LoadMoreButton from '../LoadMoreButton';
+import LoadMoreButton from '../generic/LoadMoreButton';
 
 import styles from './CoinTable.module.css';
 

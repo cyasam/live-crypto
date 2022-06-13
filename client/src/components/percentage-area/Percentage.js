@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import styles from './PercentageArea.module.css';
+import styles from './Percentage.module.css';
 
-function PercentageArea({ className, value }) {
+function Percentage({ className, value }) {
   let Arrow = <i className={classNames(styles.indicator, styles.nochange)}></i>;
 
   if (value > 0) {
@@ -31,4 +31,4 @@ function PercentageArea({ className, value }) {
   );
 }
 
-export default PercentageArea;
+export default Percentage;

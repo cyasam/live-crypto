@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import useAuth from '../../hooks/use-auth';
 import Form from './Form';
-import Loading from '../Loading';
+import Loading from '../generic/Loading';
 
 import ChatItem from './ChatItem';
 

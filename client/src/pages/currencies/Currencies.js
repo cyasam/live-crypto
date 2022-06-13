@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import Modal from '../../components/Modal';
+import Modal from '../../components/generic/Modal';
 
 import CurrenciesHeader from './CurrenciesHeader';
 import PriceChartContainer from './PriceChartContainer';

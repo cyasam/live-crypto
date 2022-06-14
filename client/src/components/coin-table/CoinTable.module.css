@@ -21,3 +21,8 @@
   padding: 10px;
   text-align: right;
 }
+
+.rank,
+.name {
+  text-align: left;
+}

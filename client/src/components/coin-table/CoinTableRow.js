@@ -15,7 +15,7 @@ function CoinTableRow({ asset, coinMap }) {
   asset = processOneData(asset);
 
   const price = asset.priceUsd;
-  const image_url = coinMap.img_url;
+  const image_url = asset.img_url;
 
   return (
     <tr

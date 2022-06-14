@@ -1,6 +1,8 @@
 import './env';
 import express from 'express';
 import axios from 'axios';
+import { addAssetImageUrl, addAssetsImageUrl } from './utils';
+
 const router = express.Router();
 
 const externalApi = axios.create({
@@ -32,7 +34,10 @@ router.get('/', (req, res) => {
 router.get('/assets', async (req, res) => {
   try {
     const { data: assets } = await fetchAssets(req.query);
-    res.status(200).json(assets);
+
+    const result = addAssetsImageUrl(assets);
+
+    res.status(200).json(result);
   } catch (error) {
     if (error.response) {
       return res.status(error.response.status).json(error.response.data);
@@ -45,7 +50,9 @@ router.get('/assets', async (req, res) => {
 router.get('/assets/:currencyId', async (req, res) => {
   try {
     const { data: asset } = await fetchAssetById(req.params.currencyId);
-    res.status(200).json(asset);
+
+    const result = addAssetImageUrl(asset);
+    res.status(200).json(result);
   } catch (error) {
     if (error.response) {
       return res.status(error.response.status).json(error.response.data);

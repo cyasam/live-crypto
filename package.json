@@ -13,7 +13,7 @@
   "scripts": {
     "killall node": "killall node",
     "dev": "nodemon --exec babel-node src/server.js",
-    "build": "babel src --out-dir build && cd client && npm install && npm run build",
+    "build": "babel src --out-dir build --copy-files && cd client && npm install && npm run build",
     "start": "node build/server.js"
   },
   "dependencies": {

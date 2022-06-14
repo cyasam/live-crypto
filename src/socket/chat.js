@@ -8,6 +8,51 @@ const supabase = createClient(
 
 const allMessages = {};
 
+const checkAuthUser = async (token) => {
+  const { user, error } = await supabase.auth.api.getUser(token);
+
+  if (error) throw Error(error);
+
+  if (!user) throw Error('User session expired');
+
+  return user;
+};
+
+const fetchChatMesages = async (params) => {
+  allMessages[params.roomName] = [];
+
+  const { data: chatMessages, error } = await supabase
+    .from('chat')
+    .select(
+      `id,
+      message,
+      created_at,
+      profiles (
+        id,
+        name,
+        picture
+      )`
+    )
+    .eq('room', params.room);
+
+  if (error) console.log(error);
+
+  let result = [];
+
+  if (chatMessages) {
+    result = chatMessages.map((chatMessage) => {
+      return {
+        id: chatMessage.id,
+        message: chatMessage.message,
+        created_at: chatMessage.created_at,
+        user: chatMessage.profiles,
+      };
+    });
+  }
+
+  allMessages[params.roomName] = result;
+};
+
 const createChatSocket = (server) => {
   const io = new Server(server, {
     path: '/chat',
@@ -20,7 +65,7 @@ const createChatSocket = (server) => {
       socket.join(roomName);
 
       if (!allMessages[roomName]) {
-        allMessages[roomName] = [];
+        fetchChatMesages({ room, roomName });
       }
 
       socket.emit('all-messages', allMessages[roomName]);
@@ -28,28 +73,37 @@ const createChatSocket = (server) => {
       socket.on('send-message', async (data) => {
         try {
           console.time('send-message');
-          const { user, error } = await supabase.auth.api.getUser(data.token);
+          const authUser = await checkAuthUser(data.token);
 
-          if (error) throw Error(error);
-
-          if (!user) throw Error('User session expired');
-
-          const { data: createdMessage, error2 } = await supabase
+          const { data: createdMessage, error } = await supabase
             .from('chat')
             .upsert({
               id: data.id,
               message: data.message,
-              user_id: data.user.id,
+              user_id: authUser.id,
               room,
-            });
+            })
+            .select(
+              `id,
+              message,
+              created_at,
+              profiles (
+                id,
+                name,
+                picture
+              )`
+            );
 
-          if (error2) throw Error(error2);
+          if (error) throw Error(error);
 
-          const { id, message, created_at } = createdMessage[0];
+          if (!createdMessage) return null;
+
+          console.log(createdMessage);
+          const { id, message, created_at, profiles } = createdMessage[0];
           const newMessage = {
             id,
             message,
-            user: data.user,
+            user: profiles,
             created_at,
           };
 
@@ -58,7 +112,7 @@ const createChatSocket = (server) => {
           console.timeEnd('send-message');
 
           allMessages[roomName] = [newMessage, ...allMessages[roomName]];
-        } catch (err) {
+        } catch (error) {
           console.log(error);
           return null;
         }

@@ -61,7 +61,6 @@ const createChatSocket = (server) => {
   io.on('connection', (socket) => {
     socket.on('connect-room', (room) => {
       const roomName = `room:${room}`;
-
       socket.join(roomName);
 
       if (!allMessages[roomName]) {
@@ -98,7 +97,6 @@ const createChatSocket = (server) => {
 
           if (!createdMessage) return null;
 
-          console.log(createdMessage);
           const { id, message, created_at, profiles } = createdMessage[0];
           const newMessage = {
             id,

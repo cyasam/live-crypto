@@ -78,9 +78,11 @@ function Chat({ room }) {
         });
       });
     });
-
-    return () => connected && socket.disconnect();
   }, [room, connected]);
+
+  useEffect(() => {
+    return () => connected && socketRef.current.disconnect();
+  }, [connected]);
 
   return (
     <div className={styles.container}>

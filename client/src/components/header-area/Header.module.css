@@ -1,19 +1,34 @@
 .mainheader {
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--mainheader-height);
   margin-bottom: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
 }
 
-.header {
+.inner {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.header h1 {
-  margin: 0;
+.logoarea {
+  display: flex;
+  align-items: center;
 }
 
-.header h1 a {
+.logoarea h1 {
+  margin: 0 0 0 10px;
+  font-size: 24px;
+  color: #000;
+}
+
+.logoarea h1 a {
   color: inherit;
   text-decoration: none;
 }

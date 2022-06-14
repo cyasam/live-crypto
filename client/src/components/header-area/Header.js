@@ -8,10 +8,16 @@ function Header() {
   return (
     <header className={styles.mainheader}>
       <div className="container">
-        <div className={styles.header}>
-          <h1>
-            <Link to="/">Coin Prices</Link>
-          </h1>
+        <div className={styles.inner}>
+          <div className={styles.logoarea}>
+            <Link to="/">
+              <img src="/images/logo.svg" width={36} alt="Coin Prices" />
+            </Link>
+            <h1>
+              <Link to="/">Coin Prices</Link>
+            </h1>
+          </div>
+
           <LoginArea />
         </div>
       </div>

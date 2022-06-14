@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { AuthProvider } from './hooks/use-auth';
 
-import styles from './App.module.css';
 import Header from './components/header-area/Header';
 import Loading from './components/generic/Loading';
 
@@ -14,7 +13,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <div className={styles.app}>
+        <div className="app">
           <Header />
 
           <div className="container">

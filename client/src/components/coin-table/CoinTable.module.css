@@ -8,7 +8,7 @@
 
 .thead {
   position: sticky;
-  top: 0;
+  top: var(--mainheader-height);
   z-index: 10;
   height: 47px;
   background-color: rgb(248, 250, 253);

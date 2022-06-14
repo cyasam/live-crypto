@@ -34,7 +34,7 @@ function CoinTable() {
   }
 
   return (
-    <div className={classNames(styles.container)}>
+    <>
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr>
@@ -59,7 +59,7 @@ function CoinTable() {
           setPage(page + 1);
         }}
       />
-    </div>
+    </>
   );
 }
 

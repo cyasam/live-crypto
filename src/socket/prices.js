@@ -32,7 +32,7 @@ const createPricesSocket = (server) => {
       };
     });
 
-    socket.on('disconnect', async (reason) => {
+    socket.on('disconnect', async () => {
       console.log('Disconnected');
       externalSocket && externalSocket.close();
     });

@@ -19,7 +19,7 @@
   width: 100%;
   max-height: 100%;
   overflow: auto;
-  padding: var(--inner-padding) calc(var(--inner-padding) * 2);
+  padding: calc(var(--inner-padding) * 2 + 10px) var(--inner-padding);
 }
 
 .content {

@@ -3,7 +3,7 @@
   align-items: center;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 1001;
   height: var(--mainheader-height);
   margin-bottom: 20px;
   background-color: #fff;

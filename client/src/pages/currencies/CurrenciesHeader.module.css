@@ -22,6 +22,11 @@
   font-weight: 500;
 }
 
+.coinimage {
+  margin-right: 16px;
+  border-radius: 100%;
+}
+
 .pricearea {
   display: flex;
   margin-top: 12px;
@@ -40,6 +45,7 @@
 }
 
 .maininfo {
+  display: flex;
   margin: 14px 20px;
 }
 
@@ -52,20 +58,21 @@
   margin: 14px 20px;
 }
 
-.header.loading .maininfo {
-  width: 200px;
-  height: 30px;
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.header.loading .maininfo {
+.header.loading .heading {
   width: 200px;
   height: 60px;
   background-color: rgba(255, 255, 255, 0.2);
 }
 
 .header.loading .otherinfo .col .value {
-  width: 200px;
+  width: 140px;
   height: 20px;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.header.loading .coinimage {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
   background-color: rgba(255, 255, 255, 0.2);
 }

@@ -25,21 +25,32 @@ function CurrenciesHeader({ currencyId }) {
       {currency && (
         <>
           <div className={styles.maininfo}>
-            <h1>
-              {currency.name} ({currency.symbol})
-            </h1>
+            <img
+              loading="lazy"
+              src={currency.img_url}
+              width={40}
+              height={40}
+              alt={asset.name}
+              className={styles.coinimage}
+            />
 
-            <div className={styles.pricearea}>
-              <div className={styles.price}>
-                <PriceArea id={currency.id} value={currency.priceUsd} />
-              </div>
+            <div className={styles.heading}>
+              <h1>
+                {currency.name} ({currency.symbol})
+              </h1>
 
-              <div className={styles.percentage}>
-                <PercentageArea
-                  id={currency.id}
-                  value={currency.priceUsd}
-                  price24hUsd={currency.price24hUsd}
-                />
+              <div className={styles.pricearea}>
+                <div className={styles.price}>
+                  <PriceArea id={currency.id} value={currency.priceUsd} />
+                </div>
+
+                <div className={styles.percentage}>
+                  <PercentageArea
+                    id={currency.id}
+                    value={currency.priceUsd}
+                    price24hUsd={currency.price24hUsd}
+                  />
+                </div>
               </div>
             </div>
           </div>

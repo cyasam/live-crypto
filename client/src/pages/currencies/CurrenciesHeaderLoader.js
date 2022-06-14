@@ -5,7 +5,10 @@ import styles from './CurrenciesHeader.module.css';
 function CurrenciesHeaderLoader() {
   return (
     <div className={classNames(styles.header, styles.loading)}>
-      <div className={styles.maininfo}></div>
+      <div className={styles.maininfo}>
+        <div className={styles.coinimage}></div>
+        <div className={styles.heading}></div>
+      </div>
       <div className={styles.otherinfo}>
         <div className={styles.col}>
           <h2>Market Cap</h2>

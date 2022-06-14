@@ -45,7 +45,6 @@ td.rank {
   margin-top: 1px;
   margin-right: 6px;
   border-radius: 100%;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
 }
 
 .loading .td.placeholder {

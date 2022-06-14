@@ -9,12 +9,13 @@ import PercentageArea from '../percentage-area/PercentageArea';
 import PriceArea from '../price-area/PriceArea';
 import Price from '../price-area/Price';
 
-function CoinTableRow({ asset }) {
+function CoinTableRow({ asset, coinMap }) {
   const navigate = useNavigate();
 
   asset = processOneData(asset);
 
   const price = asset.priceUsd;
+  const image_url = coinMap.img_url;
 
   return (
     <tr
@@ -27,12 +28,11 @@ function CoinTableRow({ asset }) {
         <div className={styles.nameblock}>
           <img
             loading="lazy"
-            src={`https://assets.coincap.io/assets/icons/${asset.symbol.toLowerCase()}@2x.png`}
+            src={image_url}
             width={30}
             height={30}
             alt={asset.name}
             className={styles.image}
-            onError={(e) => (e.target.src = '../logo.svg')}
           />
           <span>{asset.name}</span>
           <span className={styles.symbol}>{asset.symbol}</span>

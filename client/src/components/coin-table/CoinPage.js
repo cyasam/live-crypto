@@ -6,6 +6,8 @@ import usePriceSocket from '../../hooks/use-price-socket';
 import CoinPageLoader from './CoinPageLoader';
 import CoinTableRow from './CoinTableRow';
 
+import coinMaps from '../../coin_map.json';
+
 function CoinPage({ page, onSuccess, onLoading, onError, limit }) {
   const urlSearchParams = { limit, offset: (page - 1) * limit };
 
@@ -41,7 +43,8 @@ function CoinPage({ page, onSuccess, onLoading, onError, limit }) {
   return (
     <>
       {assets.data.map((asset) => {
-        return <CoinTableRow key={asset.id} asset={asset} />;
+        const coinMap = coinMaps.find((coin) => coin.symbol === asset.symbol);
+        return <CoinTableRow key={asset.id} asset={asset} coinMap={coinMap} />;
       })}
     </>
   );

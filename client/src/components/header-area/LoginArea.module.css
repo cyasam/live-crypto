@@ -1,32 +1,36 @@
-.userarea {
+.loginarea {
   display: flex;
   align-items: center;
+  height: 100%;
+}
+
+.userarea {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .userpicture {
+  flex-shrink: 0;
   overflow: hidden;
   border-radius: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3);
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
-.userdetail p {
-  margin: 3px 0;
-  font-size: 13px;
+.icon {
+  display: flex;
+  align-items: center;
+  perspective: 1000px;
 }
 
-.userdetail .name {
-  font-size: 14px;
-  font-weight: bold;
+.icon .svg {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
-.userarea button {
-  background-color: #364e7a;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  height: 30px;
+.useraction {
+  display: flex;
   cursor: pointer;
-  margin-left: 10px;
-  padding: 0 10px;
 }

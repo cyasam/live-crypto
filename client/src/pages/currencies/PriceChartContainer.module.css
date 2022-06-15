@@ -1,5 +1,12 @@
+.chartarea {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .chartblock {
   position: relative;
+  flex: 1;
 }
 
 .buttons {
@@ -29,7 +36,6 @@
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 10;
   display: flex;
   width: 100%;
   height: 100%;

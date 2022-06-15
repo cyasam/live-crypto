@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import LoginArea from './LoginArea';
 
 import styles from './Header.module.css';
@@ -7,7 +8,7 @@ import { Link } from 'react-router-dom';
 function Header() {
   return (
     <header className={styles.mainheader}>
-      <div className="container">
+      <div className={classNames('container', styles.container)}>
         <div className={styles.inner}>
           <div className={styles.logoarea}>
             <Link to="/">

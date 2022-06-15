@@ -1,0 +1,56 @@
+.userpicture {
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  margin-right: 8px;
+}
+
+.userdetail {
+  display: flex;
+}
+
+.name {
+  margin: 3px 0 0 0;
+  font-size: 17px;
+}
+
+.email {
+  margin: 4px 0 0 0;
+  font-size: 13px;
+  color: rgb(97, 97, 97);
+}
+
+.logoutbtn {
+  background-color: #ce9a0b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  height: 30px;
+  cursor: pointer;
+  padding: 0 10px;
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.usermenu {
+  min-width: 250px;
+  position: absolute;
+  top: calc(100% + 3px);
+  right: 0;
+  padding: 16px 20px;
+  background-color: #fff;
+  border-radius: 3px;
+  box-shadow: 0 2px 2px rgb(0 0 0 / 20%);
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: var(--mainheader-height);
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-color: #000;
+}

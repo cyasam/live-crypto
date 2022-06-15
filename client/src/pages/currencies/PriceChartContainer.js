@@ -50,16 +50,6 @@ const createQuery = (chartType) => {
   return query.toString();
 };
 
-const LoadingComponent = ({ data, error }) => {
-  let component = null;
-
-  if (!data) component = <PriceChartContainerLoader />;
-
-  if (error) component = <Error />;
-
-  return component;
-};
-
 function PriceChartContainer({ currencyId }) {
   const [chartType, setChartType] = useState('1D');
   const [queryString, setQueryString] = useState(null);
@@ -83,8 +73,8 @@ function PriceChartContainer({ currencyId }) {
   return (
     <div className={styles.chartarea}>
       <div className={styles.chartblock}>
-        <LoadingComponent data={candles?.data} error={error} />
-
+        {!candles && <PriceChartContainerLoader />}
+        {error && <Error />}
         <PriceChart data={candles?.data} />
       </div>
 

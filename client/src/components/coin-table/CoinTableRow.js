@@ -25,7 +25,7 @@ function CoinTableRow({ asset, coinMap }) {
     >
       <td className={classNames(styles.td, styles.rank)}>{asset.rank}</td>
       <td className={classNames(styles.td, styles.name)}>
-        <div className={styles.nameblock}>
+        <div className={styles.namearea}>
           <img
             loading="lazy"
             src={image_url}
@@ -34,8 +34,10 @@ function CoinTableRow({ asset, coinMap }) {
             alt={asset.name}
             className={styles.image}
           />
-          <span>{asset.name}</span>
-          <span className={styles.symbol}>{asset.symbol}</span>
+          <div className={styles.nameblock}>
+            <span>{asset.name}</span>
+            <span className={styles.symbol}>{asset.symbol}</span>
+          </div>
         </div>
       </td>
       <td className={styles.td}>

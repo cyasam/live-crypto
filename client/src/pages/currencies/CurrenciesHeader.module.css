@@ -76,3 +76,17 @@
   border-radius: 100%;
   background-color: rgba(255, 255, 255, 0.2);
 }
+
+@media screen and (max-width: 767px) {
+  .coinimage {
+    width: 36px;
+    height: 36px;
+  }
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .price {
+    font-size: 22px;
+  }
+}

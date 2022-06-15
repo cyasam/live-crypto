@@ -11,30 +11,41 @@
   flex-direction: column;
   background-color: rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(1px);
-
-  --inner-padding: 30px;
 }
 
 .inner {
   width: 100%;
   max-height: 100%;
   overflow: auto;
-  padding: calc(var(--inner-padding) * 2 + 10px) var(--inner-padding);
+  padding: 105px 30px 30px;
+}
+
+@media screen and (max-width: 767px) {
+  .inner {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+  }
 }
 
 .content {
+  position: relative;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.contentinner {
   background-color: #fff;
-  border-radius: 5px;
-  min-height: 200px;
   overflow: hidden;
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  min-height: 200px;
 }
 
 .closebtn {
   position: absolute;
-  top: var(--inner-padding);
-  right: var(--inner-padding);
+  top: -33px;
+  right: 0px;
   width: 36px;
   height: 36px;
   display: flex;

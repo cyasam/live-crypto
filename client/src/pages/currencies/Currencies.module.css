@@ -1,14 +1,22 @@
-.row {
-  display: flex;
+@media screen and (min-width: 1024px) {
+  .row {
+    display: flex;
+  }
+
+  .colchart {
+    width: 70%;
+  }
+
+  .colchat {
+    width: 30%;
+  }
 }
 
 .colchart {
-  width: 70%;
   padding: 20px;
 }
 
 .colchat {
-  width: 30%;
   display: flex;
   padding: 20px;
 }

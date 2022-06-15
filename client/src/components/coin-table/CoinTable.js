@@ -35,30 +35,34 @@ function CoinTable() {
 
   return (
     <>
-      <table className={styles.table}>
-        <thead className={styles.thead}>
-          <tr>
-            <th className={classNames(styles.th, styles.rank)}>#</th>
-            <th className={classNames(styles.th, styles.name)}>Name</th>
-            <th className={styles.th}>Price</th>
-            <th className={styles.th}>Market Cap</th>
-            <th className={styles.th}>Volume (24h)</th>
-            <th className={styles.th}>Circulating Supply</th>
-            <th className={styles.th}>24h %</th>
-          </tr>
-        </thead>
-        <tbody>{pages}</tbody>
-      </table>
-      <LoadMoreButton
-        loading={loadMore}
-        error={error}
-        onClick={(e) => {
-          e.preventDefault();
+      <div className={styles.tablecontainer}>
+        <table className={styles.table}>
+          <thead className={styles.thead}>
+            <tr>
+              <th className={classNames(styles.th, styles.rank)}>#</th>
+              <th className={classNames(styles.th, styles.name)}>Name</th>
+              <th className={styles.th}>Price</th>
+              <th className={styles.th}>Market Cap</th>
+              <th className={styles.th}>Volume (24h)</th>
+              <th className={styles.th}>Circulating Supply</th>
+              <th className={styles.th}>24h %</th>
+            </tr>
+          </thead>
+          <tbody>{pages}</tbody>
+        </table>
+      </div>
+      <div className={styles.loadmorewrapper}>
+        <LoadMoreButton
+          loading={loadMore}
+          error={error}
+          onClick={(e) => {
+            e.preventDefault();
 
-          setLoadMore(true);
-          setPage(page + 1);
-        }}
-      />
+            setLoadMore(true);
+            setPage(page + 1);
+          }}
+        />
+      </div>
     </>
   );
 }

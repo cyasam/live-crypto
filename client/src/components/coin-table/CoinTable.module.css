@@ -1,3 +1,19 @@
+@media screen and (max-width: 1023px) {
+  .th:nth-child(1),
+  .th:nth-child(2) {
+    position: sticky;
+    left: 0;
+  }
+
+  .th:nth-child(2) {
+    left: 30px;
+  }
+}
+
+.tablecontainer {
+  overflow-x: auto;
+}
+
 .table {
   width: 100%;
   font-size: 15px;
@@ -8,10 +24,9 @@
 
 .thead {
   position: sticky;
-  top: var(--mainheader-height);
+  top: 0;
   z-index: 10;
   height: 47px;
-  background-color: rgb(248, 250, 253);
   font-weight: 500;
   font-size: 13px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
@@ -20,9 +35,14 @@
 .th {
   padding: 10px;
   text-align: right;
+  background-color: #fff;
 }
 
 .rank,
 .name {
   text-align: left;
+}
+
+.loadmorewrapper {
+  margin-bottom: 20px;
 }

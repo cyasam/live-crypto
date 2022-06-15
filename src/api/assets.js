@@ -1,17 +1,30 @@
 import express from 'express';
 import { addAssetImageUrl, addAssetsImageUrl } from '../utils';
+import { existCache, getCache, setCache } from '../redis';
 import { externalApi } from '.';
 
 const router = express.Router();
 
+const setAssets = async (key, result, options) => {
+  await setCache(key, result, { EX: 5 * 60, ...options });
+};
+
 const fetchAssets = async (query) => {
   const params = new URLSearchParams(query);
   const queryString = params.toString();
-  const { data: assets } = await externalApi.get(
-    `/assets${queryString && `?${queryString}`}`
-  );
+  const url = `/assets${queryString && `?${queryString}`}`;
 
-  return addAssetsImageUrl(assets);
+  const isExistCache = await existCache(url);
+  if (isExistCache) {
+    return await getCache(url);
+  }
+
+  const { data: assets } = await externalApi.get(url);
+  const result = addAssetsImageUrl(assets);
+
+  await setAssets(url, result);
+
+  return await getCache(url);
 };
 
 router.get('/', async (req, res) => {
@@ -29,9 +42,20 @@ router.get('/', async (req, res) => {
 });
 
 const fetchAssetById = async (currencyId) => {
-  const { data: asset } = await externalApi.get(`/assets/${currencyId}`);
+  const url = `/assets/${currencyId}`;
 
-  return addAssetImageUrl(asset);
+  const isExistCache = await existCache(url);
+  if (isExistCache) {
+    return await getCache(url);
+  }
+
+  const { data: asset } = await externalApi.get(url);
+
+  const result = addAssetImageUrl(asset);
+
+  await setAssets(url, result);
+
+  return result;
 };
 
 router.get('/:currencyId', async (req, res) => {
@@ -48,12 +72,36 @@ router.get('/:currencyId', async (req, res) => {
   }
 });
 
+const calculateExpirationTime = (interval) => {
+  const period = interval.substr(0, 1);
+  const time = parseInt(interval.substr(1, interval.length));
+
+  if (period === 'h') {
+    return time * 60 * 60;
+  } else if (period === 'd') {
+    return time * 24 * 60 * 60;
+  }
+
+  return time * 60;
+};
+
 const fetchAssetHistoryById = async (currencyId, query) => {
   const params = new URLSearchParams(query);
   const queryString = params.toString();
-  const { data: asset } = await externalApi.get(
-    `/assets/${currencyId}/history${queryString && `?${queryString}`}`
-  );
+
+  const url = `/assets/${currencyId}/history${
+    queryString && `?${queryString}`
+  }`;
+
+  const isExistCache = await existCache(url);
+  if (isExistCache) {
+    return await getCache(url);
+  }
+
+  const { data: asset } = await externalApi.get(url);
+
+  const expireTime = calculateExpirationTime(query.interval);
+  await setAssets(url, asset, { EX: expireTime });
 
   return asset;
 };

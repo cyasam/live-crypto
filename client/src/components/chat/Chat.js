@@ -15,13 +15,15 @@ import styles from './Chat.module.css';
 function Chat({ room }) {
   const { user, token, isLoggedIn } = useAuth();
   const [connected, setConnected] = useState(false);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState(null);
 
   const socketRef = useRef();
 
   const mounted = useRef(false);
 
   useEffect(() => {
+    if (mounted.current) return;
+
     const fetchMessages = async () => {
       const { data: messages } = await axios.get(`/api/chat/${room}/messages`);
 
@@ -29,7 +31,7 @@ function Chat({ room }) {
     };
 
     fetchMessages();
-  }, [room]);
+  }, [messages, room]);
 
   const sendMessage = useCallback(
     (message) => {

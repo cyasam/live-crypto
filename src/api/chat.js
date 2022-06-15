@@ -1,9 +1,21 @@
 import express from 'express';
+import { existCache, getCache, setCache } from '../redis';
 import { supabase } from '../utils';
 
 const router = express.Router();
 
+const setChatRoomMessages = async (roomKey, result) => {
+  await setCache(roomKey, result, { EX: 3600 });
+};
+
 const fetchChatMesages = async (room) => {
+  const roomKey = `room:${room}`;
+
+  const isExistCache = await existCache(roomKey);
+  if (isExistCache) {
+    return await getCache(roomKey);
+  }
+
   const { data: chatMessages, error } = await supabase
     .from('chat')
     .select(
@@ -21,7 +33,7 @@ const fetchChatMesages = async (room) => {
 
   if (error) console.log(error);
 
-  return {
+  const result = {
     data: chatMessages?.map((chatMessage) => {
       return {
         id: chatMessage.id,
@@ -31,6 +43,10 @@ const fetchChatMesages = async (room) => {
       };
     }),
   };
+
+  await setChatRoomMessages(roomKey, result);
+
+  return result;
 };
 
 router.get('/:room/messages/', async (req, res) => {

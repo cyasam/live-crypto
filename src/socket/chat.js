@@ -1,4 +1,5 @@
 import { Server } from 'socket.io';
+import { getCache, setCache } from '../redis';
 import { supabase } from '../utils';
 
 const checkAuthUser = async (token) => {
@@ -9,6 +10,16 @@ const checkAuthUser = async (token) => {
   if (!user) throw Error('User session expired');
 
   return user;
+};
+
+export const updateChatRoomMessages = async (roomKey, newMessage) => {
+  const cache = await getCache(roomKey);
+
+  const messages = cache.data;
+  const result = [newMessage, ...messages];
+  cache.data = result;
+
+  await setCache(roomKey, cache, { XX: true });
 };
 
 const createChatSocket = (server) => {
@@ -59,6 +70,9 @@ const createChatSocket = (server) => {
 
           socket.emit('message-sent', { id, created_at });
           socket.broadcast.to(roomName).emit('get-message', newMessage);
+
+          await updateChatRoomMessages(roomName, newMessage);
+
           console.timeEnd('send-message');
         } catch (error) {
           console.log(error);

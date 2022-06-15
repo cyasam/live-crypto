@@ -13,7 +13,10 @@ const chartTypeList = ['1D', '1W', '1M', '3M', '6M', '1Y', 'all'];
 const createQuery = (chartType) => {
   if (!chartType) return null;
 
-  const end = new Date().getTime();
+  let end = new Date();
+  end.setHours(23, 59, 59, 999);
+  end = end.getTime();
+
   const oneDay = 24 * 60 * 60 * 1000;
   let start = end - oneDay;
   let interval = 'm5';
@@ -69,7 +72,7 @@ function PriceChartContainer({ currencyId }) {
     queryString ? `/api/assets/${currencyId}/history?${queryString}` : null,
     fetcher,
     {
-      refreshInterval: 60 * 1000,
+      refreshInterval: 5 * 60 * 1000,
     }
   );
 

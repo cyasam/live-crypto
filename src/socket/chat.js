@@ -1,12 +1,5 @@
 import { Server } from 'socket.io';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.REACT_APP_SUPABASE_URL,
-  process.env.REACT_APP_SUPABASE_ANON
-);
-
-const allMessages = {};
+import { supabase } from '../utils';
 
 const checkAuthUser = async (token) => {
   const { user, error } = await supabase.auth.api.getUser(token);
@@ -18,42 +11,6 @@ const checkAuthUser = async (token) => {
   return user;
 };
 
-const fetchChatMesages = async (params) => {
-  allMessages[params.roomName] = [];
-
-  const { data: chatMessages, error } = await supabase
-    .from('chat')
-    .select(
-      `id,
-      message,
-      created_at,
-      profiles (
-        id,
-        name,
-        picture
-      )`
-    )
-    .eq('room', params.room)
-    .order('created_at', { ascending: false });
-
-  if (error) console.log(error);
-
-  let result = [];
-
-  if (chatMessages) {
-    result = chatMessages.map((chatMessage) => {
-      return {
-        id: chatMessage.id,
-        message: chatMessage.message,
-        created_at: chatMessage.created_at,
-        user: chatMessage.profiles,
-      };
-    });
-  }
-
-  allMessages[params.roomName] = result;
-};
-
 const createChatSocket = (server) => {
   const io = new Server(server, {
     path: '/chat',
@@ -63,12 +20,6 @@ const createChatSocket = (server) => {
     socket.on('connect-room', async (room) => {
       const roomName = `room:${room}`;
       socket.join(roomName);
-
-      if (!allMessages[roomName]) {
-        await fetchChatMesages({ room, roomName });
-      }
-
-      socket.emit('all-messages', allMessages[roomName]);
 
       socket.on('send-message', async (data) => {
         try {
@@ -109,8 +60,6 @@ const createChatSocket = (server) => {
           socket.emit('message-sent', { id, created_at });
           socket.broadcast.to(roomName).emit('get-message', newMessage);
           console.timeEnd('send-message');
-
-          allMessages[roomName] = [newMessage, ...allMessages[roomName]];
         } catch (error) {
           console.log(error);
           return null;

@@ -9,6 +9,7 @@ import serveStatic from 'serve-static';
 
 import createPricesSocket from './socket/prices';
 import createChatSocket from './socket/chat';
+import connectRedisServer from './redis';
 
 const PORT = process.env.PORT || '3001';
 
@@ -27,6 +28,7 @@ app.get('/*', function (req, res) {
 
 const server = http.createServer(app);
 
+connectRedisServer();
 createPricesSocket(server);
 createChatSocket(server);
 

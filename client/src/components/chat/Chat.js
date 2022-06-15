@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { io } from 'socket.io-client';
 import { AnimatePresence } from 'framer-motion';
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 import useAuth from '../../hooks/use-auth';
 import Form from './Form';
@@ -19,6 +20,16 @@ function Chat({ room }) {
   const socketRef = useRef();
 
   const mounted = useRef(false);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const { data: messages } = await axios.get(`/api/chat/${room}/messages`);
+
+      setMessages(messages.data);
+    };
+
+    fetchMessages();
+  }, [room]);
 
   const sendMessage = useCallback(
     (message) => {
@@ -54,10 +65,6 @@ function Chat({ room }) {
     socket.on('connect', () => {
       setConnected(true);
       socket.emit('connect-room', room);
-
-      socket.on('all-messages', (allMessages) => {
-        setMessages(allMessages);
-      });
 
       socket.on('get-message', (message) => {
         setMessages((messages) => [message, ...messages]);

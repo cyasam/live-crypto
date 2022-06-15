@@ -1,6 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
+import { createClient } from '@supabase/supabase-js';
+
+export const supabase = createClient(
+  process.env.REACT_APP_SUPABASE_URL,
+  process.env.REACT_APP_SUPABASE_ANON
+);
+
 const coinMapFile = path.join(__dirname, './coin_map.json');
 
 export const addAssetsImageUrl = (assets) => {

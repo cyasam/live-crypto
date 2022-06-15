@@ -33,7 +33,8 @@ const fetchChatMesages = async (params) => {
         picture
       )`
     )
-    .eq('room', params.room);
+    .eq('room', params.room)
+    .order('created_at', { ascending: false });
 
   if (error) console.log(error);
 
@@ -59,12 +60,12 @@ const createChatSocket = (server) => {
   });
 
   io.on('connection', (socket) => {
-    socket.on('connect-room', (room) => {
+    socket.on('connect-room', async (room) => {
       const roomName = `room:${room}`;
       socket.join(roomName);
 
       if (!allMessages[roomName]) {
-        fetchChatMesages({ room, roomName });
+        await fetchChatMesages({ room, roomName });
       }
 
       socket.emit('all-messages', allMessages[roomName]);

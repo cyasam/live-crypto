@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useRef } from 'react';
 
 import styles from './Form.module.css';
 
 function Form({ isLoggedIn, userPicture, sendMessage }) {
   const [message, setMessage] = useState('');
+  const inputRef = useRef();
 
   if (!isLoggedIn)
     return <p className={styles.notification}>You need to login to write</p>;
@@ -18,6 +20,7 @@ function Form({ isLoggedIn, userPicture, sendMessage }) {
 
         sendMessage(message.trim());
         setMessage('');
+        inputRef.current.blur();
       }}
     >
       {userPicture && (
@@ -30,6 +33,7 @@ function Form({ isLoggedIn, userPicture, sendMessage }) {
         />
       )}
       <input
+        ref={inputRef}
         className={styles.input}
         type="text"
         placeholder="Send a message"

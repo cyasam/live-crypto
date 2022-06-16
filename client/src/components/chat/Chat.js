@@ -18,6 +18,7 @@ function Chat({ room }) {
   const [messages, setMessages] = useState(null);
 
   const socketRef = useRef();
+  const chatareaRef = useRef();
 
   const mounted = useRef(false);
 
@@ -44,6 +45,8 @@ function Chat({ room }) {
         },
         message,
       };
+
+      chatareaRef.current.scrollTop = 0;
 
       setMessages((messages) => [
         { ...messageObj, status: 'sending' },
@@ -99,7 +102,7 @@ function Chat({ room }) {
         <Loading />
       ) : (
         <>
-          <div className={styles.chatarea}>
+          <div ref={chatareaRef} className={styles.chatarea}>
             <AnimatePresence>
               {messages?.map((message) => {
                 return <ChatItem key={message.id} message={message} />;

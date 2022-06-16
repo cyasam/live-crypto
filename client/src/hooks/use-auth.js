@@ -17,9 +17,14 @@ const useProvideAuth = () => {
   const [user, setUser] = useState(null);
 
   const login = async () => {
-    const { error } = await supabase.auth.signIn({
-      provider: 'google',
-    });
+    const { error } = await supabase.auth.signIn(
+      {
+        provider: 'google',
+      },
+      {
+        redirectTo: window.location.href,
+      }
+    );
 
     if (error) throw error;
   };

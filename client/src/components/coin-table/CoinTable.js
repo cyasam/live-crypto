@@ -4,34 +4,44 @@ import CoinPage from './CoinPage';
 import LoadMoreButton from '../generic/LoadMoreButton';
 
 import styles from './CoinTable.module.css';
+import { useEffect } from 'react';
 
 function CoinTable() {
   const [error, setError] = useState(false);
   const [loadMore, setLoadMore] = useState(false);
   const [page, setPage] = useState(1);
+  const [pagesJSX, setPagesJSX] = useState(null);
 
-  const pages = [];
+  useEffect(() => {
+    const renderPages = () => {
+      const pages = [];
 
-  for (let i = 0; i < page; i++) {
-    pages.push(
-      <CoinPage
-        key={i}
-        page={i + 1}
-        limit={50}
-        onLoading={() => {
-          setError(false);
-        }}
-        onSuccess={() => {
-          setLoadMore(false);
-          setError(false);
-        }}
-        onError={() => {
-          setLoadMore(false);
-          setError(true);
-        }}
-      />
-    );
-  }
+      for (let i = 0; i < page; i++) {
+        pages.push(
+          <CoinPage
+            key={i}
+            page={i + 1}
+            limit={50}
+            onLoading={() => {
+              setError(false);
+            }}
+            onSuccess={() => {
+              setLoadMore(false);
+              setError(false);
+            }}
+            onError={() => {
+              setLoadMore(false);
+              setError(true);
+            }}
+          />
+        );
+      }
+
+      setPagesJSX(pages);
+    };
+
+    renderPages();
+  }, [page]);
 
   return (
     <>
@@ -48,7 +58,7 @@ function CoinTable() {
               <th className={styles.th}>24h %</th>
             </tr>
           </thead>
-          <tbody>{pages}</tbody>
+          <tbody>{pagesJSX}</tbody>
         </table>
       </div>
       <div className={styles.loadmorewrapper}>

@@ -12,7 +12,12 @@ function Header() {
         <div className={styles.inner}>
           <div className={styles.logoarea}>
             <Link to="/">
-              <img src="/images/logo.svg" width={36} alt="Coin Prices" />
+              <img
+                src="/images/logo.svg"
+                width={36}
+                height={38}
+                alt="Coin Prices"
+              />
             </Link>
             <h1>
               <Link to="/">Coin Prices</Link>

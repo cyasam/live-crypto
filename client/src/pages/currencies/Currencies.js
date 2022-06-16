@@ -1,11 +1,13 @@
 import { useParams } from 'react-router-dom';
-import Modal from '../../components/generic/Modal';
+import loadable from '@loadable/component';
 
+import Modal from '../../components/generic/Modal';
 import CurrenciesHeader from './CurrenciesHeader';
-import PriceChartContainer from './PriceChartContainer';
 
 import styles from './Currencies.module.css';
 import Chat from '../../components/chat/Chat';
+
+const PriceChartContainer = loadable(() => import('./PriceChartContainer'));
 
 function Currencies() {
   const params = useParams();

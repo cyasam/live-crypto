@@ -56,7 +56,7 @@ const createChatSocket = (server) => {
               )`
             );
 
-          if (error) throw Error(error);
+          if (error) throw Error(error.message);
 
           if (!createdMessage) return null;
 

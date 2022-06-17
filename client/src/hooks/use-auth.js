@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { createContext, useContext, useEffect, useState } from 'react';
 import supabase from '../utils/supabase';
 
@@ -41,11 +42,22 @@ const useProvideAuth = () => {
 
   useEffect(() => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         if (event === 'SIGNED_IN') {
-          setUser(session?.user?.user_metadata);
+          const { data: user } = await axios.get('/api/auth/login', {
+            withCredentials: true,
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Supabase-Auth': session?.access_token,
+            },
+          });
+
+          setUser(user);
+          localStorage.setItem('user', JSON.stringify(user));
         } else if (event === 'SIGNED_OUT') {
           setUser(null);
+          localStorage.removeItem('user');
         }
       }
     );
@@ -55,9 +67,8 @@ const useProvideAuth = () => {
 
   const session = getSession();
   useEffect(() => {
-    const user = session
-      ? { ...session?.user?.user_metadata, id: session?.user?.id }
-      : null;
+    const localUser = localStorage.getItem('user');
+    const user = localUser ? JSON.parse(localUser) : null;
 
     setUser(user);
   }, [session]);

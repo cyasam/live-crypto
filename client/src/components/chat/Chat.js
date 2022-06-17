@@ -7,7 +7,6 @@ import axios from 'axios';
 import useAuth from '../../hooks/use-auth';
 import Form from './Form';
 import Loading from '../generic/Loading';
-
 import ChatItem from './ChatItem';
 
 import styles from './Chat.module.css';

@@ -9,7 +9,7 @@ import PercentageArea from '../percentage-area/PercentageArea';
 import PriceArea from '../price-area/PriceArea';
 import Price from '../price-area/Price';
 
-function CoinTableRow({ asset, coinMap }) {
+function CoinTableRow({ asset }) {
   const navigate = useNavigate();
 
   asset = processOneData(asset);
@@ -41,7 +41,7 @@ function CoinTableRow({ asset, coinMap }) {
         </div>
       </td>
       <td className={styles.td}>
-        <PriceArea id={asset.id} value={price} />
+        <PriceArea id={asset.id} value={price} color="rgb(23, 25, 36)" />
       </td>
       <td className={styles.td}>
         <Price value={asset.marketCapUsd} />

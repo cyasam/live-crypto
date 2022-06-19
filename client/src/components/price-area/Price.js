@@ -1,18 +1,10 @@
 import React from 'react';
 import { formatCurrency } from '@coingecko/cryptoformat';
 
-import styles from './Price.module.css';
-import classNames from 'classnames';
-
-function Price({ className, value, changeDirection }) {
+function Price({ className, value }) {
   value = formatCurrency(value, 'USD', 'en');
 
-  const priceClassName = classNames(className, {
-    [styles.up]: changeDirection === 'up',
-    [styles.down]: changeDirection === 'down',
-  });
-
-  return <span className={priceClassName}>{value}</span>;
+  return <span className={className}>{value}</span>;
 }
 
 export default Price;

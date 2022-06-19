@@ -41,7 +41,11 @@ function CurrenciesHeader({ currencyId }) {
 
               <div className={styles.pricearea}>
                 <div className={styles.price}>
-                  <PriceArea id={currency.id} value={currency.priceUsd} />
+                  <PriceArea
+                    id={currency.id}
+                    value={currency.priceUsd}
+                    color="#fff"
+                  />
                 </div>
 
                 <div className={styles.percentage}>

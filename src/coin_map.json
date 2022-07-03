@@ -70906,5 +70906,11 @@
     "symbol": "BTC",
     "slug": "bitcoin",
     "img_url": "/images/coins/bitcoin.png"
+  },
+  {
+    "name": "TerraClassicUSD",
+    "symbol": "USTC",
+    "slug": "terrausd",
+    "img_url": "/images/coins/terrausd.png"
   }
 ]

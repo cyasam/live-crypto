@@ -31,6 +31,10 @@ function Chat({ room }) {
     };
 
     fetchMessages();
+
+    return () => {
+      mounted.current = false;
+    };
   }, [messages, room]);
 
   const sendMessage = useCallback(

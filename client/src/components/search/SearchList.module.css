@@ -1,0 +1,15 @@
+.item a {
+  display: flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  padding: 3px 14px;
+}
+
+.item a:hover {
+  background-color: #ffe380;
+}
+
+.item img {
+  margin-right: 10px;
+}

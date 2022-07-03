@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+
 import LoginArea from './LoginArea';
+import SearchArea from '../search/SearchArea';
 
 import styles from './Header.module.css';
-import { Link } from 'react-router-dom';
 
 function Header() {
   return (
@@ -24,6 +26,7 @@ function Header() {
             </h1>
           </div>
 
+          <SearchArea />
           <LoginArea />
         </div>
       </div>

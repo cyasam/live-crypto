@@ -22,8 +22,12 @@
 .nochange {
   display: block;
   width: 10px;
-  height: 4px;
+  height: 3px;
   background-color: #000;
+}
+
+.dark .nochange {
+  background-color: #fff;
 }
 
 .text.up {
@@ -36,7 +40,6 @@
 .indicator {
   display: inline-block;
   margin-left: 6px;
-  background-color: #fff;
 }
 
 .percentage {

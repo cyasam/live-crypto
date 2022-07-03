@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import styles from './Percentage.module.css';
 
-function Percentage({ className, value }) {
+function Percentage({ type, value }) {
   let Arrow = <i className={classNames(styles.indicator, styles.nochange)}></i>;
 
   if (value > 0) {
@@ -17,7 +17,11 @@ function Percentage({ className, value }) {
   }
 
   return (
-    <div className={classNames(styles.percentage, className)}>
+    <div
+      className={classNames(styles.percentage, {
+        [styles.dark]: type === 'dark',
+      })}
+    >
       <span
         className={classNames(styles.text, {
           [styles.up]: value > 0,

@@ -52,6 +52,7 @@ function CurrenciesHeader({ currencyId }) {
 
                 <div className={styles.percentage}>
                   <PercentageArea
+                    type="dark"
                     id={currency.id}
                     value={currency.priceUsd}
                     price24hUsd={currency.price24hUsd}

@@ -13,33 +13,29 @@ const chartTypeList = ['1D', '1W', '1M', '3M', '6M', '1Y', 'all'];
 const createQuery = (chartType) => {
   if (!chartType) return null;
 
-  let end = new Date();
-  end.setHours(23, 59, 59, 999);
-  end = end.getTime();
-
-  const now = new Date().getTime();
+  const end = new Date().getTime();
 
   const oneDay = 24 * 60 * 60 * 1000;
-  let start = now - oneDay;
+  let start = end - oneDay;
   let interval = 'm5';
 
   if (chartType === '1W') {
-    start = now - 7 * oneDay;
+    start = end - 7 * oneDay;
     interval = 'm30';
   } else if (chartType === '1M') {
-    start = now - 30 * oneDay;
+    start = end - 30 * oneDay;
     interval = 'h1';
   } else if (chartType === '3M') {
-    start = now - 3 * 30 * oneDay;
+    start = end - 3 * 30 * oneDay;
     interval = 'h6';
   } else if (chartType === '6M') {
-    start = now - 6 * 30 * oneDay;
+    start = end - 6 * 30 * oneDay;
     interval = 'h12';
   } else if (chartType === '1Y') {
-    start = now - 12 * 30 * oneDay;
+    start = end - 12 * 30 * oneDay;
     interval = 'd1';
   } else if (chartType === 'all') {
-    start = now - 11 * 12 * 30 * oneDay;
+    start = end - 11 * 12 * 30 * oneDay;
     interval = 'd1';
   }
 

@@ -94,15 +94,7 @@ const fetchAssetHistoryById = async (currencyId, query) => {
     queryString && `?${queryString}`
   }`;
 
-  const isExistCache = await existCache(url);
-  if (isExistCache) {
-    return await getCache(url);
-  }
-
   const { data: asset } = await externalApi.get(url);
-
-  const expireTime = calculateExpirationTime(query.interval);
-  await setAssets(url, asset, { EX: expireTime });
 
   return asset;
 };

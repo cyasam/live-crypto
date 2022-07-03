@@ -36,6 +36,7 @@
 .indicator {
   display: inline-block;
   margin-left: 6px;
+  background-color: #fff;
 }
 
 .percentage {

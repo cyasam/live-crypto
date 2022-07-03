@@ -3,3 +3,9 @@
   width: 100%;
   max-width: 350px;
 }
+
+@media (max-width: 768px) {
+  .container {
+    margin: 0 30px;
+  }
+}

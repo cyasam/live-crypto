@@ -25,14 +25,16 @@ function CurrenciesHeader({ currencyId }) {
       {currency && (
         <>
           <div className={styles.maininfo}>
-            <img
-              loading="lazy"
-              src={currency.img_url}
-              width={40}
-              height={40}
-              alt={asset.name}
-              className={styles.coinimage}
-            />
+            {currency.img_url && (
+              <img
+                loading="lazy"
+                src={currency.img_url}
+                width={40}
+                height={40}
+                alt={asset.name}
+                className={styles.coinimage}
+              />
+            )}
 
             <div className={styles.heading}>
               <h1>

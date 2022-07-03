@@ -1,10 +1,24 @@
-.searchFormInput {
+.container {
+  display: flex;
+  align-items: center;
   position: relative;
   z-index: 1;
-  width: 100%;
-  height: 38px;
   padding: 0 14px;
   border-radius: 3px;
   border: 1px solid #000;
+  background-color: #fff;
+}
+
+.input {
+  position: relative;
+  width: 100%;
+  height: 38px;
   font-family: inherit;
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+.icon {
+  margin-left: 7px;
 }

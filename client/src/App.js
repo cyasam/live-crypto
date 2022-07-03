@@ -4,6 +4,7 @@ import { AuthProvider } from './hooks/use-auth';
 
 import Header from './components/header-area/Header';
 import Loading from './components/generic/Loading';
+import Container from './components/generic/Container';
 
 const Home = loadable(() => import('./pages/Home'));
 const Currencies = loadable(() => import('./pages/currencies/Currencies'));
@@ -16,14 +17,14 @@ function App() {
         <div className="app">
           <Header />
 
-          <div className="container">
+          <Container>
             <Routes>
               <Route path="/" element={<Home fallback={<Loading />} />}>
                 <Route path="currencies/:currencyId" element={<Currencies />} />
               </Route>
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </div>
+          </Container>
         </div>
       </AuthProvider>
     </BrowserRouter>

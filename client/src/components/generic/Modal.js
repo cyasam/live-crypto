@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import styles from './Modal.module.css';
@@ -13,6 +13,12 @@ const variants = {
 function Modal({ children, backUrl }) {
   const navigate = useNavigate();
   const contentRef = useRef();
+
+  const modalInnerRef = useRef();
+  const location = useLocation();
+  useLayoutEffect(() => {
+    modalInnerRef.current.scrollTo(0, 0);
+  }, [location]);
 
   useEffect(() => {
     document.body.classList.add('modal');
@@ -33,7 +39,7 @@ function Modal({ children, backUrl }) {
   return createPortal(
     <AnimatePresence>
       <div className={styles.container} onClick={clickOutside}>
-        <div className={styles.inner}>
+        <div className={styles.inner} ref={modalInnerRef}>
           <motion.div
             ref={contentRef}
             className={styles.content}

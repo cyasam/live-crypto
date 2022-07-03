@@ -19,11 +19,7 @@ function Chat({ room }) {
   const socketRef = useRef();
   const chatareaRef = useRef();
 
-  const mounted = useRef(false);
-
   useEffect(() => {
-    if (mounted.current) return;
-
     const fetchMessages = async () => {
       const { data: messages } = await axios.get(`/api/chat/${room}/messages`);
 
@@ -31,11 +27,7 @@ function Chat({ room }) {
     };
 
     fetchMessages();
-
-    return () => {
-      mounted.current = false;
-    };
-  }, [messages, room]);
+  }, [room]);
 
   const sendMessage = useCallback(
     (message) => {
@@ -61,9 +53,6 @@ function Chat({ room }) {
   );
 
   useEffect(() => {
-    if (mounted.current || connected) return;
-    mounted.current = true;
-
     socketRef.current = io('/', {
       path: '/chat',
     });

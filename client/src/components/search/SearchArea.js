@@ -6,7 +6,6 @@ import SearchListContainer from './SearchListContainer';
 import { useSearch } from '../../store/search';
 
 function SearchArea() {
-  const query = useSearch((state) => state.query);
   const toggleSearch = useSearch((state) => state.toggleSearch);
 
   const containerRef = useRef();
@@ -25,8 +24,7 @@ function SearchArea() {
   return (
     <div className={styles.container} ref={containerRef}>
       <SearchForm />
-
-      {query.length > 2 && <SearchListContainer />}
+      <SearchListContainer />
     </div>
   );
 }

@@ -52,7 +52,6 @@ const fetchAssetById = async (currencyId) => {
   const { data: asset } = await externalApi.get(url);
 
   const result = addAssetImageUrl(asset);
-  console.log(asset);
 
   await setAssets(url, result);
 

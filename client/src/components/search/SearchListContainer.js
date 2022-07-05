@@ -10,13 +10,15 @@ import styles from './SearchListContainer.module.css';
 function SearchListContainer() {
   const open = useSearch((state) => state.open);
   const query = useSearch((state) => state.query);
+  const search = useSearch((state) => state.search);
 
-  console.log(open);
   const { data: searchResults } = useSWR(
-    open && `/api/assets?search=${query}&limit=5`,
+    search.length > 0 && `/api/assets?search=${query}&limit=5`,
     fetcher,
     { revalidateOnFocus: false }
   );
+
+  if (search.length === 0) return null;
 
   if (!searchResults)
     return (

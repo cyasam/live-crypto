@@ -9,6 +9,7 @@ function SearchList({ assets }) {
   const [selectedItem, setSelectedItem] = useState(-1);
   const toggleSearch = useSearch((state) => state.toggleSearch);
   const setQuery = useSearch((state) => state.setQuery);
+  const setSearch = useSearch((state) => state.setSearch);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,6 +29,8 @@ function SearchList({ assets }) {
       } else if (e.keyCode === 13) {
         setQuery(assets[selectedItem].name);
         toggleSearch(false);
+
+        setSearch('');
         navigate(`/currencies/${assets[selectedItem].id}`);
       }
     };
@@ -37,7 +40,7 @@ function SearchList({ assets }) {
     return () => {
       document.removeEventListener('keydown', handler);
     };
-  }, [assets, navigate, selectedItem, setQuery, toggleSearch]);
+  }, [assets, navigate, selectedItem, setQuery, toggleSearch, setSearch]);
 
   return (
     <>
@@ -50,6 +53,7 @@ function SearchList({ assets }) {
           onClick={() => {
             setQuery(asset.name);
             toggleSearch(false);
+            setSearch('');
             navigate(`/currencies/${asset.id}`);
           }}
         >

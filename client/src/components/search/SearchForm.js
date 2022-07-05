@@ -8,6 +8,7 @@ function SearchForm() {
   const query = useSearch((state) => state.query);
   const toggleSearch = useSearch((state) => state.toggleSearch);
   const setQuery = useSearch((state) => state.setQuery);
+  const setSearch = useSearch((state) => state.setSearch);
   const location = useLocation();
 
   const inputRef = useRef();
@@ -27,6 +28,7 @@ function SearchForm() {
         onChange={(e) => {
           const value = e.target.value;
           setQuery(value);
+          setSearch(value);
           toggleSearch(true);
         }}
         onFocus={() => {

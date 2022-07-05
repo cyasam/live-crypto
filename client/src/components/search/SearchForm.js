@@ -1,29 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import useDebounce from '../../hooks/use-debounce';
+import React, { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSearch } from '../../store/search';
 
 import styles from './SearchForm.module.css';
 
 function SearchForm() {
-  const [query, setQuery] = useState('');
-  const search = useDebounce(query, 500);
+  const query = useSearch((state) => state.query);
   const toggleSearch = useSearch((state) => state.toggleSearch);
-  const setSearch = useSearch((state) => state.setSearch);
+  const setQuery = useSearch((state) => state.setQuery);
+  const location = useLocation();
+
+  const inputRef = useRef();
 
   useEffect(() => {
-    setSearch(search);
-    toggleSearch(search.length > 2);
-  }, [search, setSearch, toggleSearch]);
+    inputRef.current.blur();
+  }, [location, toggleSearch]);
 
   return (
     <div className={styles.container}>
       <input
+        ref={inputRef}
         className={styles.input}
         type="search"
         placeholder="Search"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        onFocus={() => query.length > 2 && toggleSearch(true)}
+        onChange={(e) => {
+          const value = e.target.value;
+          setQuery(value);
+          toggleSearch(true);
+        }}
+        onFocus={() => {
+          toggleSearch(true);
+        }}
       />
       <svg
         className={styles.icon}

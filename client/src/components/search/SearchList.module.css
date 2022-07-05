@@ -1,4 +1,4 @@
-.item a {
+.item {
   display: flex;
   align-items: center;
   color: inherit;
@@ -6,8 +6,10 @@
   padding: 3px 14px;
 }
 
-.item a:hover {
+.item:hover,
+.item.active {
   background-color: #ffe380;
+  cursor: pointer;
 }
 
 .item img {

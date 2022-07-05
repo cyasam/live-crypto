@@ -14,3 +14,7 @@
 .loading {
   padding: 3px 14px;
 }
+
+.hide {
+  display: none;
+}

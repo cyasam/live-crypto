@@ -3,11 +3,10 @@ import SearchForm from './SearchForm';
 
 import styles from './SearchArea.module.css';
 import SearchListContainer from './SearchListContainer';
-import { useLocation } from 'react-router-dom';
 import { useSearch } from '../../store/search';
 
 function SearchArea() {
-  const location = useLocation();
+  const query = useSearch((state) => state.query);
   const toggleSearch = useSearch((state) => state.toggleSearch);
 
   const containerRef = useRef();
@@ -23,14 +22,11 @@ function SearchArea() {
     return () => document.removeEventListener('mousedown', handler);
   });
 
-  useEffect(() => {
-    toggleSearch(false);
-  }, [location, toggleSearch]);
-
   return (
     <div className={styles.container} ref={containerRef}>
       <SearchForm />
-      <SearchListContainer />
+
+      {query.length > 2 && <SearchListContainer />}
     </div>
   );
 }

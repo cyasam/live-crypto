@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 import useSWR from 'swr';
 import { useSearch } from '../../store/search';
@@ -8,18 +9,18 @@ import styles from './SearchListContainer.module.css';
 
 function SearchListContainer() {
   const open = useSearch((state) => state.open);
-  const search = useSearch((state) => state.search);
+  const query = useSearch((state) => state.query);
 
+  console.log(open);
   const { data: searchResults } = useSWR(
-    search.length > 2 && `/api/assets?search=${search}&limit=5`,
-    fetcher
+    open && `/api/assets?search=${query}&limit=5`,
+    fetcher,
+    { revalidateOnFocus: false }
   );
-
-  if (!open) return null;
 
   if (!searchResults)
     return (
-      <div className={styles.container}>
+      <div className={classNames(styles.container, { [styles.hide]: !open })}>
         <p className={styles.loading}>Loading...</p>
       </div>
     );
@@ -29,7 +30,7 @@ function SearchListContainer() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={classNames(styles.container, { [styles.hide]: !open })}>
       <SearchList assets={searchResults?.data} />
     </div>
   );

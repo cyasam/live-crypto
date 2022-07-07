@@ -8,7 +8,7 @@ const formatDefaultChatDate = (value) => {
   return new Intl.DateTimeFormat('en-US', {
     day: 'numeric',
     month: 'short',
-    hour12: false,
+    hourCycle: 'h23',
     hour: '2-digit',
     minute: '2-digit',
     year: 'numeric',

@@ -2,10 +2,10 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { AuthProvider } from './hooks/use-auth';
 
-import Header from './components/header-area/Header';
-import Loading from './components/generic/Loading';
 import Container from './components/generic/Container';
 
+const Header = loadable(() => import('./components/header-area/Header'));
+const Loading = loadable(() => import('./components/generic/Loading'));
 const Home = loadable(() => import('./pages/Home'));
 const Currencies = loadable(() => import('./pages/currencies/Currencies'));
 const NotFound = loadable(() => import('./pages/NotFound'));

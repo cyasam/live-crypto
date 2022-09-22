@@ -3,7 +3,7 @@ import './env';
 import http from 'http';
 import express from 'express';
 import apiRoute from './api';
-import path from 'node:path';
+import path from 'path';
 import compression from 'compression';
 import serveStatic from 'serve-static';
 

@@ -24,7 +24,7 @@ const fetchAssets = async (query) => {
 
   await setAssets(url, result);
 
-  return await getCache(url);
+  return result;
 };
 
 router.get('/', async (req, res) => {
@@ -89,9 +89,8 @@ const fetchAssetHistoryById = async (currencyId, query) => {
   const params = new URLSearchParams(query);
   const queryString = params.toString();
 
-  const url = `/assets/${currencyId}/history${
-    queryString && `?${queryString}`
-  }`;
+  const url = `/assets/${currencyId}/history${queryString && `?${queryString}`
+    }`;
 
   const { data: asset } = await externalApi.get(url);
 

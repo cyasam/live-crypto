@@ -53,6 +53,10 @@ function Chat({ room }) {
   );
 
   useEffect(() => {
+    if (connected) {
+      return
+    }
+
     socketRef.current = io('/', {
       path: '/chat',
     });
@@ -62,10 +66,6 @@ function Chat({ room }) {
     socket.on('connect', () => {
       setConnected(true);
       socket.emit('connect-room', room);
-
-      socket.on('get-message', (message) => {
-        setMessages((messages) => [message, ...messages]);
-      });
 
       socket.on('message-sent', (sentMessage) => {
         setMessages((messages) => {
@@ -82,11 +82,11 @@ function Chat({ room }) {
         });
       });
     });
+
+    return () => connected && socketRef.current.disconnect();
   }, [room, connected]);
 
-  useEffect(() => {
-    return () => connected && socketRef.current.disconnect();
-  }, [connected]);
+
 
   return (
     <div className={styles.container}>
